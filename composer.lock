@@ -1,5 +1,5 @@
 {
-    "hash": "0fdc30a30dc83239c6a95e6ad01249ea",
+    "hash": "9934b76b486b51e0716d97bd894dda4b",
     "packages": [
         {
             "package": "justinrainbow/json-schema",
@@ -8,7 +8,20 @@
             "commit-date": "1337277049"
         }
     ],
-    "packages-dev": null,
+    "packages-dev": [
+        {
+            "package": "symfony/finder",
+            "version": "dev-master",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/finder",
+            "version": "dev-master",
+            "source-reference": "v2.1.0-BETA1",
+            "commit-date": "1340118982"
+        }
+    ],
     "aliases": [
 
     ],

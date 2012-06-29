@@ -9,6 +9,9 @@
     "require": {
         "justinrainbow/json-schema": "*"
     },
+    "require-dev": {
+        "symfony/finder": "2.1.*"
+    },
     "autoload": {
         "psr-0": {
             "Gloubster": "src"
