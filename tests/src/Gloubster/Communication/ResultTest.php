@@ -1,18 +1,18 @@
 <?php
 
-namespace Gloubster\Job;
+namespace Gloubster\Communication;
 
 class ResultTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers Gloubster\Job\Result::__construct
-     * @covers Gloubster\Job\Result::getJobHandle
-     * @covers Gloubster\Job\Result::getUuid
-     * @covers Gloubster\Job\Result::getWorkload
-     * @covers Gloubster\Job\Result::getBinaryData
-     * @covers Gloubster\Job\Result::getDuration
-     * @covers Gloubster\Job\Result::getInfos
+     * @covers Gloubster\Communication\Result::__construct
+     * @covers Gloubster\Communication\Result::getJobHandle
+     * @covers Gloubster\Communication\Result::getUuid
+     * @covers Gloubster\Communication\Result::getWorkload
+     * @covers Gloubster\Communication\Result::getBinaryData
+     * @covers Gloubster\Communication\Result::getDuration
+     * @covers Gloubster\Communication\Result::getInfos
      */
     public function testGetters()
     {
@@ -34,8 +34,8 @@ class ResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Job\Result::serialize
-     * @covers Gloubster\Job\Result::unserialize
+     * @covers Gloubster\Communication\Result::serialize
+     * @covers Gloubster\Communication\Result::unserialize
      */
     public function testSerialize()
     {
@@ -53,7 +53,7 @@ class ResultTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Job\Result::unserialize
+     * @covers Gloubster\Communication\Result::unserialize
      * @expectedException Gloubster\Exception\RuntimeException
      */
     public function testSerializingCorruption()
@@ -65,7 +65,7 @@ class ResultTest extends \PHPUnit_Framework_TestCase
         $duration = 0.023;
         $infos = array('this was pretty good');
 
-        $result = $this->getMock('Gloubster\Job\Result', array('serialize'), array($jobHandle, $uuid, $workload, $binaryData, $duration, $infos));
+        $result = $this->getMock('Gloubster\Communication\Result', array('serialize'), array($jobHandle, $uuid, $workload, $binaryData, $duration, $infos));
 
         $result->expects($this->once())
             ->method('serialize')
