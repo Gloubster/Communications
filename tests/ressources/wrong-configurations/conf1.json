@@ -1,0 +1,9 @@
+{
+    "delivery":{
+        "name":"RedisStore",
+        "configuration":{
+            "host":"redis-server",
+            "port":6379
+        }
+    }
+}
