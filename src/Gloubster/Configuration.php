@@ -11,6 +11,9 @@
 
 namespace Gloubster;
 
+use JsonSchema\Validator;
+use Gloubster\Exception\RuntimeException;
+
 class Configuration implements \ArrayAccess
 {
     protected $schema;
@@ -25,15 +28,20 @@ class Configuration implements \ArrayAccess
 
         $this->schema = json_decode(file_get_contents($schemaFile));
 
-        if(!$this->schema) {
-            throw new Exception\RuntimeException('Invalid configuration schema');
+        if ( ! $this->schema) {
+            throw new RuntimeException('Invalid configuration schema');
         }
 
-        $this->validator = new \JsonSchema\Validator();
+        $this->validator = new Validator();
         $this->validator->check($configuration, $this->schema);
 
         if ( ! $this->validator->isValid()) {
-            throw new Exception\RuntimeException('Invalid configuration');
+            $errors = array();
+            foreach ($validator->getErrors() as $error) {
+                $errors[] = sprintf("[%s] %s\n", $error['property'], $error['message']);
+            }
+
+            throw new RuntimeException(sprintf('Invalid configuration : %s', implode(', ', $errors)));
         }
 
         $this->configuration = json_decode(file_get_contents($file), true);
