@@ -1,7 +1,12 @@
 {
-    "hash": "cfd5a86cadd8771825ed90eab1a16bf7",
+    "hash": "0fdc30a30dc83239c6a95e6ad01249ea",
     "packages": [
-
+        {
+            "package": "justinrainbow/json-schema",
+            "version": "dev-master",
+            "source-reference": "535962c9997d0b09582189914cfae1a5ed1e3317",
+            "commit-date": "1337277049"
+        }
     ],
     "packages-dev": null,
     "aliases": [
