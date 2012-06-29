@@ -36,12 +36,12 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeliver()
     {
-        if(false === class_exists('\\Redis')) {
+        if (false === class_exists('\\Redis')) {
             $this->markTestSkipped('This test requires Redis extension');
         }
 
         $redis = $this->getMock('\Redis');
-        $result = $this->getMock('\Gloubster\Job\Result');
+        $result = $this->getResultMock();
 
         $result->expects($this->once())
             ->method('serialize')
@@ -61,12 +61,12 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeliverDoesNotWork()
     {
-        if(false === class_exists('\\Redis')) {
+        if (false === class_exists('\\Redis')) {
             $this->markTestSkipped('This test requires Redis extension');
         }
 
         $redis = $this->getMock('\Redis');
-        $result = $this->getMock('\Gloubster\Job\Result');
+        $result = $this->getResultMock();
 
         $redis->expects($this->once())
             ->method('set')
@@ -82,12 +82,12 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
      */
     public function testDeliverRedisThrowsException()
     {
-        if(false === class_exists('\\Redis')) {
+        if (false === class_exists('\\Redis')) {
             $this->markTestSkipped('This test requires Redis extension');
         }
 
         $redis = $this->getMock('\Redis');
-        $result = $this->getMock('\Gloubster\Job\Result');
+        $result = $this->getResultMock();
 
         $redis->expects($this->once())
             ->method('set')
@@ -102,7 +102,7 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
      */
     public function testRetrieve()
     {
-        if(false === class_exists('\\Redis')) {
+        if (false === class_exists('\\Redis')) {
             $this->markTestSkipped('This test requires Redis extension');
         }
 
@@ -121,7 +121,7 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
      */
     public function testRetrieveDoesNotWork()
     {
-        if(false === class_exists('\\Redis')) {
+        if (false === class_exists('\\Redis')) {
             $this->markTestSkipped('This test requires Redis extension');
         }
 
@@ -140,12 +140,12 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
      */
     public function testRetrieveCorruptedDatas()
     {
-        if(false === class_exists('\\Redis')) {
+        if (false === class_exists('\\Redis')) {
             $this->markTestSkipped('This test requires Redis extension');
         }
 
         $redis = $this->getMock('\Redis');
-        $result = $this->getMock('\Gloubster\Job\Result');
+        $result = $this->getResultMock();
 
         $redis->expects($this->once())
             ->method('get')
@@ -161,7 +161,7 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
      */
     public function testRetrieveThrowException()
     {
-        if(false === class_exists('\\Redis')) {
+        if (false === class_exists('\\Redis')) {
             $this->markTestSkipped('This test requires Redis extension');
         }
 
@@ -182,7 +182,14 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
     {
         $redis = $this->getWorkingRedis();
 
-        $result = new \Gloubster\Job\Result();
+        $jobHandle = 'job-handle';
+        $uuid = 'unique id';
+        $workload = json_encode('datas');
+        $binaryData = file_get_contents(__FILE__);
+        $duration = 0.023;
+        $infos = array('this was pretty good');
+        
+        $result = new \Gloubster\Job\Result($jobHandle, $uuid, $workload, $binaryData, $duration, $infos);
 
         $this->object = new RedisStore($redis, 'signature');
         $this->object->deliver('test', $result);
@@ -204,8 +211,8 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
     public function getWrongConfs()
     {
         return array(
-            array(array('host'=>'localhost')),
-            array(array('port'=>6379)),
+            array(array('host' => 'localhost')),
+            array(array('port' => 6379)),
             array(array()),
         );
     }
@@ -217,7 +224,7 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildWrongHostPort()
     {
-        RedisStore::build(array('host'=>'localhost', 'port'=>'80'));
+        RedisStore::build(array('host' => 'localhost', 'port' => '80'));
     }
 
     /**
@@ -226,7 +233,7 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
     public function testBuild()
     {
         $this->getWorkingRedis();
-        RedisStore::build(array('host'=>'localhost', 'port'=>6379));
+        RedisStore::build(array('host' => 'localhost', 'port' => 6379));
     }
 
     /**
@@ -235,15 +242,15 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
     public function testBuildsEquals()
     {
         $this->getWorkingRedis();
-        $build1 = RedisStore::build(array('host'=>'localhost', 'port'=>6379));
-        $build2 = RedisStore::build(array('host'=>'localhost', 'port'=>'6379'));
+        $build1 = RedisStore::build(array('host'  => 'localhost', 'port'  => 6379));
+        $build2 = RedisStore::build(array('host' => 'localhost', 'port' => '6379'));
 
         $this->assertEquals($build2->getSignature(), $build1->getSignature());
     }
 
     protected function getWorkingRedis()
     {
-        if(false === class_exists('\\Redis')) {
+        if (false === class_exists('\\Redis')) {
             $this->markTestSkipped('This test requires Redis extension');
         }
 
@@ -261,5 +268,19 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
         }
 
         return $redis;
+    }
+
+    protected function getResultMock()
+    {
+        $jobHandle = 'job-handle';
+        $uuid = 'unique id';
+        $workload = json_encode('datas');
+        $binaryData = file_get_contents(__FILE__);
+        $duration = 0.023;
+        $infos = array('this was pretty good');
+
+        $result = $this->getMock('\Gloubster\Job\Result', array(), array($jobHandle, $uuid, $workload, $binaryData, $duration, $infos));
+
+        return $result;
     }
 }

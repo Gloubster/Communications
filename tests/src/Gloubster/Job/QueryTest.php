@@ -73,6 +73,6 @@ class QueryTest extends \PHPUnit_Framework_TestCase
                 $this->returnValue('prout !')
         );
 
-        $query2 = unserialize(serialize($query));
+        unserialize(serialize($query));
     }
 }
