@@ -92,8 +92,8 @@ class RedisStore implements DeliveryInterface
 
             $throw = false;
             set_error_handler(function() use (&$throw) {
-                $throw = true;
-            }, E_WARNING);
+                    $throw = true;
+                }, E_WARNING);
 
             $unserialized = unserialize($ret);
 
@@ -115,7 +115,7 @@ class RedisStore implements DeliveryInterface
      */
     public static function build(array $configuration)
     {
-        if (false === isset($configuration['host']) || false ===  isset($configuration['port'])) {
+        if (false === isset($configuration['host']) || false === isset($configuration['port'])) {
             throw new InvalidArgumentException('Configuration must contain host and port keys');
         }
 
@@ -132,6 +132,6 @@ class RedisStore implements DeliveryInterface
                 . 'Redis Server, check connection and sever load');
         }
 
-        return new static($redis, md5(json_encode(array($configuration['host'], $configuration['port']))));
+        return new static($redis, md5(json_encode(array($configuration['host'], (int) $configuration['port']))));
     }
 }

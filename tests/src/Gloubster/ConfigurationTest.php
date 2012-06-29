@@ -2,8 +2,6 @@
 
 namespace Gloubster;
 
-//require_once dirname(__FILE__).'/../../Gloubster/Configuration.php';
-
 class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -24,6 +22,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         unset($conf['key']);
         $this->assertFalse(isset($conf['key']));
     }
+
     /**
      * @dataProvider getWrongConfigurations
      * @expectedException \Gloubster\Exception\RuntimeException
