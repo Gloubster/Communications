@@ -35,12 +35,12 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
     public function getGoodConfigurations()
     {
-        return $this->loadConfigurationsFolder(__DIR__ . '/../ressources/good-configurations');
+        return $this->loadConfigurationsFolder(__DIR__ . '/../../ressources/good-configurations');
     }
 
     public function getWrongConfigurations()
     {
-        return $this->loadConfigurationsFolder(__DIR__ . '/../ressources/wrong-configurations');
+        return $this->loadConfigurationsFolder(__DIR__ . '/../../ressources/wrong-configurations');
     }
 
     protected function loadConfigurationsFolder($folder)
