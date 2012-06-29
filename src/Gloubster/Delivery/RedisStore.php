@@ -13,6 +13,8 @@ namespace Gloubster\Delivery;
 
 use Gloubster\Delivery\Exception\ItemDoesNotExistsException;
 use Gloubster\Exception\RuntimeException;
+use Gloubster\Exception\InvalidArgumentException;
+use Gloubster\Job\Result;
 
 /**
  * Redis store delivery system
@@ -39,7 +41,11 @@ class RedisStore implements DeliveryInterface
      */
     public function __destruct()
     {
-        $this->redis->close();
+        try {
+            $this->redis->close();
+        } catch (\RedisException $e) {
+
+        }
         unset($this->redis);
     }
 
@@ -62,10 +68,10 @@ class RedisStore implements DeliveryInterface
     /**
      * {@inheritdoc}
      */
-    public function deliver($key, $data)
+    public function deliver($key, Result $result)
     {
         try {
-            if (false === $this->redis->set($key, $data)) {
+            if (false === $this->redis->set($key, serialize($result))) {
                 throw new RuntimeException('Unable to deliver the result');
             }
         } catch (\RedisException $e) {
@@ -80,11 +86,24 @@ class RedisStore implements DeliveryInterface
     public function retrieve($key)
     {
         try {
-            if(false === $ret = $this->redis->get($key)) {
+            if (false === $ret = $this->redis->get($key)) {
                 throw new ItemDoesNotExistsException(sprintf('Item %s does not exists', $key));
             }
 
-            return $ret;
+            $throw = false;
+            set_error_handler(function() use (&$throw) {
+                $throw = true;
+            }, E_WARNING);
+
+            $unserialized = unserialize($ret);
+
+            restore_error_handler();
+
+            if ($throw === true && $unserialized === false) {
+                throw new RuntimeException('Data were corrupted');
+            }
+
+            return $unserialized;
         } catch (\RedisException $e) {
             throw new RuntimeException('Something wrong happened with '
                 . 'Redis Server, check connection and sever load');
@@ -96,8 +115,8 @@ class RedisStore implements DeliveryInterface
      */
     public static function build(array $configuration)
     {
-        if (isset($configuration['host']) || isset($configuration['port'])) {
-            throw new \InvalidArgumentException('Configuration must contain host and port keys');
+        if (false === isset($configuration['host']) || false ===  isset($configuration['port'])) {
+            throw new InvalidArgumentException('Configuration must contain host and port keys');
         }
 
         $redis = new \Redis();
@@ -113,6 +132,6 @@ class RedisStore implements DeliveryInterface
                 . 'Redis Server, check connection and sever load');
         }
 
-        return new static($redis, md5(array($configuration['host'], $configuration['port'])));
+        return new static($redis, md5(json_encode(array($configuration['host'], $configuration['port']))));
     }
 }

@@ -14,6 +14,15 @@ namespace Gloubster;
 use JsonSchema\Validator;
 use Gloubster\Exception\RuntimeException;
 
+/**
+ * Gloubster configuration for Workers and Client
+ *
+ * This configuration loads a configuration file which have to be compliant
+ * with the schema.
+ *
+ * The configuration object provides an ArrayAccess interface.
+ *
+ */
 class Configuration implements \ArrayAccess
 {
     protected $schema;

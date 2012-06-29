@@ -69,5 +69,5 @@ interface DeliveryInterface
      *
      * @throws Gloubster\Exception\RuntimeException On failure
      */
-    public function build(array $configuration);
+    public static function build(array $configuration);
 }
