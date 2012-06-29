@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Gloubster\Job;
+namespace Gloubster\Communication;
 
 use Gloubster\Exception\RuntimeException;
 

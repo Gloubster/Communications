@@ -11,7 +11,7 @@
 
 namespace Gloubster\Delivery;
 
-use Gloubster\Job\Result;
+use Gloubster\Communication\Result;
 
 /**
  * Interface for deliveries.

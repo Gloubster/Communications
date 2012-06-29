@@ -189,7 +189,7 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
         $duration = 0.023;
         $infos = array('this was pretty good');
 
-        $result = new \Gloubster\Job\Result($jobHandle, $uuid, $workload, $binaryData, $duration, $infos);
+        $result = new \Gloubster\Communication\Result($jobHandle, $uuid, $workload, $binaryData, $duration, $infos);
 
         $this->object = new RedisStore($redis, 'signature');
         $this->object->deliver('test', $result);
@@ -279,7 +279,7 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
         $duration = 0.023;
         $infos = array('this was pretty good');
 
-        $result = $this->getMock('\Gloubster\Job\Result', array(), array($jobHandle, $uuid, $workload, $binaryData, $duration, $infos));
+        $result = $this->getMock('\Gloubster\Communication\Result', array(), array($jobHandle, $uuid, $workload, $binaryData, $duration, $infos));
 
         return $result;
     }

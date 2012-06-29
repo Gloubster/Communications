@@ -14,7 +14,7 @@ namespace Gloubster\Delivery;
 use Gloubster\Delivery\Exception\ItemDoesNotExistsException;
 use Gloubster\Exception\RuntimeException;
 use Gloubster\Exception\InvalidArgumentException;
-use Gloubster\Job\Result;
+use Gloubster\Communication\Result;
 
 /**
  * Redis store delivery system

@@ -1,6 +1,6 @@
 <?php
 
-namespace Gloubster\Job;
+namespace Gloubster\Communication;
 
 class QueryTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,11 +12,11 @@ class QueryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Job\Query::getUuid
-     * @covers Gloubster\Job\Query::getFile
-     * @covers Gloubster\Job\Query::getParameters
-     * @covers Gloubster\Job\Query::getDelivery
-     * @covers Gloubster\Job\Query::__construct
+     * @covers Gloubster\Communication\Query::getUuid
+     * @covers Gloubster\Communication\Query::getFile
+     * @covers Gloubster\Communication\Query::getParameters
+     * @covers Gloubster\Communication\Query::getDelivery
+     * @covers Gloubster\Communication\Query::__construct
      * @todo Implement testGetUuid().
      */
     public function testGetters()
@@ -49,8 +49,8 @@ class QueryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Job\Query::serialize
-     * @covers Gloubster\Job\Query::unserialize
+     * @covers Gloubster\Communication\Query::serialize
+     * @covers Gloubster\Communication\Query::unserialize
      */
     public function testSerialize()
     {
@@ -60,12 +60,12 @@ class QueryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Job\Query::unserialize
+     * @covers Gloubster\Communication\Query::unserialize
      * @expectedException Gloubster\Exception\RuntimeException
      */
     public function testSerializingCorruption()
     {
-        $query = $this->getMock('Gloubster\Job\Query', array('serialize'), array('randomId', 'http://file.jpg', 'RedisStore', 'randomwords'));
+        $query = $this->getMock('Gloubster\Communication\Query', array('serialize'), array('randomId', 'http://file.jpg', 'RedisStore', 'randomwords'));
 
         $query->expects($this->once())
             ->method('serialize')
