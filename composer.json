@@ -1,0 +1,16 @@
+{
+    "name": "gloubster/gloubster",
+    "authors": [
+        {
+            "name": "Romain Neutron",
+            "email": "imprec@gmail.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-0": {
+            "Gloubster": "src"
+        }
+    }
+}
