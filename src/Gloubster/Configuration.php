@@ -37,7 +37,7 @@ class Configuration implements \ArrayAccess
 
         if ( ! $this->validator->isValid()) {
             $errors = array();
-            foreach ($validator->getErrors() as $error) {
+            foreach ($this->validator->getErrors() as $error) {
                 $errors[] = sprintf("[%s] %s\n", $error['property'], $error['message']);
             }
 
