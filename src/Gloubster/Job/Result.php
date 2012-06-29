@@ -75,7 +75,7 @@ class Result implements \Serializable
 
     public function unserialize($datas)
     {
-        if(null === $datas = @json_decode($datas, true)) {
+        if (null === $datas = @json_decode($datas, true)) {
             throw new RuntimeException('Corrupted datas');
         }
 

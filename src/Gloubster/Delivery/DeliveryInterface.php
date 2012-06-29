@@ -21,6 +21,7 @@ use Gloubster\Job\Result;
  */
 interface DeliveryInterface
 {
+
     /**
      * Return the name of the delivery module. The name must be the classname
      * inside the Gloubster\Delivery namespace

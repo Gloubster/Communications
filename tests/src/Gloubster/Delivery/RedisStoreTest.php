@@ -188,7 +188,7 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
         $binaryData = file_get_contents(__FILE__);
         $duration = 0.023;
         $infos = array('this was pretty good');
-        
+
         $result = new \Gloubster\Job\Result($jobHandle, $uuid, $workload, $binaryData, $duration, $infos);
 
         $this->object = new RedisStore($redis, 'signature');
