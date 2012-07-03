@@ -112,7 +112,7 @@ class FilesystemStore implements DeliveryInterface
         if (false === isset($configuration['path'])) {
             throw new InvalidArgumentException('Configuration must contain a path key');
         }
-        
+
         if (false === file_exists($configuration['path']) && false === @mkdir($configuration['path'], 0777, true)) {
             throw new InvalidArgumentException(sprintf('Path `%s` is not available', $configuration['path']));
         }

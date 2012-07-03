@@ -21,8 +21,9 @@ class Result implements \Serializable
     protected $binaryData;
     protected $duration;
     protected $infos;
+    protected $errors;
 
-    public function __construct($jobHandle, $uuid, $workload, $binaryData, $duration, array $infos = array())
+    public function __construct($jobHandle, $uuid, $workload, $binaryData, $duration, array $infos = array(), array $errors = array())
     {
         $this->jobHandle = $jobHandle;
         $this->uuid = $uuid;
@@ -30,6 +31,7 @@ class Result implements \Serializable
         $this->binaryData = $binaryData;
         $this->duration = $duration;
         $this->infos = $infos;
+        $this->errors = $errors;
     }
 
     public function getJobHandle()
@@ -60,6 +62,11 @@ class Result implements \Serializable
     public function getInfos()
     {
         return $this->infos;
+    }
+
+    public function getErrors()
+    {
+        return $this->errors;
     }
 
     public function serialize()
