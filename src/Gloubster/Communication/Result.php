@@ -74,6 +74,11 @@ class Result implements \Serializable
         $datas = array();
 
         foreach ($this as $prop => $data) {
+
+            if ($prop == 'binaryData') {
+                $data = base64_encode($data);
+            }
+
             $datas[$prop] = $data;
         }
 
@@ -87,6 +92,11 @@ class Result implements \Serializable
         }
 
         foreach ($datas as $prop => $data) {
+
+            if ($prop == 'binaryData') {
+                $data = base64_decode($data);
+            }
+
             $this->$prop = $data;
         }
     }
