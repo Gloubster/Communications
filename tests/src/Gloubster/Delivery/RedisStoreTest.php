@@ -2,7 +2,9 @@
 
 namespace Gloubster\Delivery;
 
-class RedisStoreTest extends \PHPUnit_Framework_TestCase
+require_once __DIR__ . '/AbstractDelivery.php';
+
+class RedisStoreTest extends AbstractDelivery
 {
     /**
      * @var RedisStore
@@ -106,9 +108,12 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('This test requires Redis extension');
         }
 
+        $result = $this->getResultObject();
+
         $redis = $this->getMock('\Redis');
         $redis->expects($this->once())
-            ->method('get');
+            ->method('get')
+            ->will($this->returnValue(serialize($result)));
 
         $this->object = new RedisStore($redis, 'signature');
         $this->object->retrieve('test');
@@ -182,14 +187,7 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
     {
         $redis = $this->getWorkingRedis();
 
-        $jobHandle = 'job-handle';
-        $uuid = 'unique id';
-        $workload = json_encode('datas');
-        $binaryData = file_get_contents(__FILE__);
-        $duration = 0.023;
-        $infos = array('this was pretty good');
-
-        $result = new \Gloubster\Communication\Result($jobHandle, $uuid, $workload, $binaryData, $duration, $infos);
+        $result = $this->getResultObject();
 
         $this->object = new RedisStore($redis, 'signature');
         $this->object->deliver('test', $result);
@@ -268,19 +266,5 @@ class RedisStoreTest extends \PHPUnit_Framework_TestCase
         }
 
         return $redis;
-    }
-
-    protected function getResultMock()
-    {
-        $jobHandle = 'job-handle';
-        $uuid = 'unique id';
-        $workload = json_encode('datas');
-        $binaryData = file_get_contents(__FILE__);
-        $duration = 0.023;
-        $infos = array('this was pretty good');
-
-        $result = $this->getMock('\Gloubster\Communication\Result', array(), array($jobHandle, $uuid, $workload, $binaryData, $duration, $infos));
-
-        return $result;
     }
 }

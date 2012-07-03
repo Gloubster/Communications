@@ -90,16 +90,9 @@ class RedisStore implements DeliveryInterface
                 throw new ItemDoesNotExistsException(sprintf('Item %s does not exists', $key));
             }
 
-            $throw = false;
-            set_error_handler(function() use (&$throw) {
-                    $throw = true;
-                }, E_WARNING);
+            $unserialized = @unserialize($ret);
 
-            $unserialized = unserialize($ret);
-
-            restore_error_handler();
-
-            if ($throw === true && $unserialized === false) {
+            if ( ! $unserialized instanceof Result) {
                 throw new RuntimeException('Data were corrupted');
             }
 
