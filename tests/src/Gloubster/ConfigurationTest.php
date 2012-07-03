@@ -49,7 +49,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $finder = new \Symfony\Component\Finder\Finder();
 
         foreach ($finder->in($folder) as $configuration) {
-            $confs[] = array($configuration->getPathname());
+            $confs[] = array(file_get_contents($configuration->getPathname()));
         }
 
         return $confs;

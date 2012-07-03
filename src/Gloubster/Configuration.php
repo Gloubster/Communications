@@ -29,9 +29,9 @@ class Configuration implements \ArrayAccess
     protected $validator;
     protected $configuration;
 
-    public function __construct($file)
+    public function __construct($json)
     {
-        $configuration = json_decode(file_get_contents($file));
+        $configuration = json_decode($json);
 
         $schemaFile = __DIR__ . '/../../ressources/configuration.schema.json';
 
@@ -53,7 +53,7 @@ class Configuration implements \ArrayAccess
             throw new RuntimeException(sprintf('Invalid configuration : %s', implode(', ', $errors)));
         }
 
-        $this->configuration = json_decode(file_get_contents($file), true);
+        $this->configuration = json_decode($json, true);
     }
 
     public function offsetExists($offset)
