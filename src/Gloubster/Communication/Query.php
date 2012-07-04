@@ -23,6 +23,8 @@ class Query implements \Serializable
     protected $deliveryName;
     protected $deliverySignature;
 
+    const FUNCTION_TRANSMUTE_IMAGE = 'transmute_image';
+
     public function __construct($uuid, $file, $deliveryName, $deliverySignature, array $parameters = array())
     {
         $this->uuid = $uuid;
