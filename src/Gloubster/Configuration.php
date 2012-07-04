@@ -25,31 +25,40 @@ use Gloubster\Exception\RuntimeException;
  */
 class Configuration implements \ArrayAccess
 {
-    protected $schema;
+    protected $schemas = array();
     protected $validator;
     protected $configuration;
 
-    public function __construct($json)
+    public function __construct($json, array $extra_schemas = array())
     {
-        $configuration = json_decode($json);
-
         $schemaFile = __DIR__ . '/../../ressources/configuration.schema.json';
+        $schemas = array_merge(array(@file_get_contents($schemaFile)), $extra_schemas);
 
-        $this->schema = json_decode(file_get_contents($schemaFile));
+        foreach ($schemas as $schema) {
+            $jsonSchema = json_decode($schema);
 
-        if ( ! $this->schema) {
-            throw new RuntimeException('Invalid configuration schema');
+            if ( ! $jsonSchema) {
+                throw new RuntimeException('Invalid configuration schema');
+            }
+
+            $this->schemas[] = $jsonSchema;
         }
 
         $this->validator = new Validator();
-        $this->validator->check($configuration, $this->schema);
+        $errors = array();
+        $configuration = json_decode($json);
 
-        if ( ! $this->validator->isValid()) {
-            $errors = array();
-            foreach ($this->validator->getErrors() as $error) {
-                $errors[] = sprintf("[%s] %s\n", $error['property'], $error['message']);
+        foreach ($this->schemas as $schema) {
+            $this->validator->check($configuration, $schema);
+
+            if ( ! $this->validator->isValid()) {
+                foreach ($this->validator->getErrors() as $error) {
+                    $errors[] = sprintf("[%s] %s\n", $error['property'], $error['message']);
+                }
             }
+        }
 
+        if ($errors) {
             throw new RuntimeException(sprintf('Invalid configuration : %s', implode(', ', $errors)));
         }
 
