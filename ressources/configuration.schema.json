@@ -1,7 +1,7 @@
 {
     "name": "Configuration",
     "type": "object",
-    "additionalProperties": false,
+    "additionalProperties": true,
     "properties": {
         "gearman-servers": {
             "type": "array",
