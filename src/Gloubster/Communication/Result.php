@@ -19,17 +19,21 @@ class Result implements \Serializable
     protected $uuid;
     protected $workload;
     protected $binaryData;
-    protected $duration;
+    protected $workerName;
+    protected $start;
+    protected $stop;
     protected $infos;
     protected $errors;
 
-    public function __construct($jobHandle, $uuid, $workload, $binaryData, $duration, array $infos = array(), array $errors = array())
+    public function __construct($jobHandle, $uuid, $workload, $binaryData, $workerName, $start, $stop, array $infos = array(), array $errors = array())
     {
         $this->jobHandle = $jobHandle;
         $this->uuid = $uuid;
         $this->workload = $workload;
         $this->binaryData = $binaryData;
-        $this->duration = $duration;
+        $this->workerName = $workerName;
+        $this->start = $start;
+        $this->stop = $stop;
         $this->infos = $infos;
         $this->errors = $errors;
     }
@@ -49,14 +53,29 @@ class Result implements \Serializable
         return $this->workload;
     }
 
+    public function getWorkerName()
+    {
+        return $this->workerName;
+    }
+
     public function getBinaryData()
     {
         return $this->binaryData;
     }
 
+    public function getStart()
+    {
+        return $this->start;
+    }
+
+    public function getStop()
+    {
+        return $this->stop;
+    }
+
     public function getDuration()
     {
-        return $this->duration;
+        return $this->stop - $this->start;
     }
 
     public function getInfos()
@@ -79,6 +98,10 @@ class Result implements \Serializable
                 $data = base64_encode($data);
             }
 
+            if(in_array($prop, array('start', 'stop'))){
+                $data = serialize($data);
+            }
+
             $datas[$prop] = $data;
         }
 
@@ -95,6 +118,10 @@ class Result implements \Serializable
 
             if ($prop == 'binaryData') {
                 $data = base64_decode($data);
+            }
+
+            if(in_array($prop, array('start', 'stop'))){
+                $data = unserialize($data);
             }
 
             $this->$prop = $data;
