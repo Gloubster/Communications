@@ -47,7 +47,7 @@ class ResultTest extends \PHPUnit_Framework_TestCase
         $jobHandle = 'job-handle';
         $uuid = 'unique id';
         $workload = json_encode('datas');
-        $binaryData = 'file_get_contents(__FILE__)';
+        $binaryData = file_get_contents(__FILE__);
         $start = microtime(true);
         $stop = microtime(true) + 0.45;
         $workerName = 'bidouille-26';
@@ -80,9 +80,7 @@ class ResultTest extends \PHPUnit_Framework_TestCase
 
         $result->expects($this->once())
             ->method('serialize')
-            ->will(
-                $this->returnValue('prout !')
-        );
+            ->will($this->returnValue('prout !'));
 
         unserialize(serialize($result));
     }

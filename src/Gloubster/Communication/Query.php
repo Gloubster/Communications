@@ -11,6 +11,7 @@
 
 namespace Gloubster\Communication;
 
+use Gloubster\Configuration;
 use Gloubster\Delivery\Factory;
 use Gloubster\Exception\RuntimeException;
 
@@ -49,11 +50,11 @@ class Query implements \Serializable
         return $this->parameters;
     }
 
-    public function getDelivery(Factory $factory, $configuration)
+    public function getDelivery(Factory $factory, Configuration $configuration)
     {
         if ( ! $this->delivery) {
 
-            $this->delivery = $factory->build($this->deliveryName, $configuration);
+            $this->delivery = $factory->build($configuration);
 
             if ($this->delivery->getSignature() !== $this->deliverySignature) {
                 throw new RuntimeException('Wrong delivery configuration');

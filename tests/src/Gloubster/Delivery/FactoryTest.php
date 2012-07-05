@@ -12,7 +12,21 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     {
         $this->getWorkingRedis();
 
-        $redisStore = Factory::build('RedisStore', array('host' => 'localhost', 'port' => 6379));
+        $configuration = $this->getMock('\\Gloubster\\Configuration', array('offsetGet'), array(), '', false);
+
+        $configuration->expects($this->any())
+            ->method('offsetGet')
+            ->will($this->returnCallback(
+                    function ($key) {
+                        return array(
+                            'name'          => 'RedisStore',
+                            'configuration' => array('host' => 'localhost', 'port' => 6379)
+                        );
+                    }
+                ));
+
+
+        $redisStore = Factory::build($configuration);
         $this->assertInstanceOf('Gloubster\\Delivery\\RedisStore', $redisStore);
     }
 
@@ -22,7 +36,20 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testBuildNonExistent()
     {
-        Factory::build('WeDontKnowWhat', array());
+        $configuration = $this->getMock('\\Gloubster\\Configuration', array('offsetGet'), array(), '', false);
+
+        $configuration->expects($this->any())
+            ->method('offsetGet')
+            ->will($this->returnCallback(
+                    function ($key) {
+                        return array(
+                            'name'          => 'WeDontKnowWhat',
+                            'configuration' => array()
+                        );
+                    }
+                ));
+
+        Factory::build($configuration);
     }
 
     protected function getWorkingRedis()

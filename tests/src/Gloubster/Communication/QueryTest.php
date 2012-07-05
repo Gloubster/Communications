@@ -2,13 +2,28 @@
 
 namespace Gloubster\Communication;
 
+use Gloubster\Delivery\Factory;
+
 class QueryTest extends \PHPUnit_Framework_TestCase
 {
     protected $redisConfiguration;
 
     public function setUp()
     {
-        $this->redisConfiguration = array('host' => 'localhost', 'port' => 6379);
+        $this->redisConfiguration = $this->getMockBuilder('\\Gloubster\\Configuration')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->redisConfiguration->expects($this->any())
+            ->method('offsetGet')
+            ->will($this->returnCallback(
+                    function ($key) {
+                        return array(
+                            'name'          => 'RedisStore',
+                            'configuration' => array('host' => 'localhost', 'port' => 6379)
+                        );
+                    }
+                ));
     }
 
     /**
@@ -24,7 +39,7 @@ class QueryTest extends \PHPUnit_Framework_TestCase
         $uuid = 'randomId';
         $file = 'http://file.jpg';
         $deliveryName = 'RedisStore';
-        $deliverySignature = md5(json_encode(array_values($this->redisConfiguration)));
+        $deliverySignature = md5(json_encode(array_values($this->redisConfiguration['delivery']['configuration'])));
         $parameters = array('width'  => 320, 'height' => 240);
 
         $query = new Query($uuid, $file, $deliveryName, $deliverySignature, $parameters);
@@ -33,7 +48,7 @@ class QueryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($file, $query->getFile());
         $this->assertEquals($parameters, $query->getParameters());
 
-        $delivery = $query->getDelivery(new \Gloubster\Delivery\Factory, $this->redisConfiguration);
+        $delivery = $query->getDelivery(new Factory(), $this->redisConfiguration);
 
         $this->assertEquals($deliveryName, $delivery->getName());
         $this->assertEquals($deliverySignature, $delivery->getSignature());
@@ -45,7 +60,7 @@ class QueryTest extends \PHPUnit_Framework_TestCase
     public function testWrongSignature()
     {
         $query = new Query('randomId', 'http://file.jpg', 'RedisStore', 'randomwords');
-        $query->getDelivery(new \Gloubster\Delivery\Factory, $this->redisConfiguration);
+        $query->getDelivery(new Factory(), $this->redisConfiguration);
     }
 
     /**
@@ -54,7 +69,7 @@ class QueryTest extends \PHPUnit_Framework_TestCase
      */
     public function testSerialize()
     {
-        $query = new Query('randomId', 'http://file.jpg', 'RedisStore', md5(json_encode(array_values($this->redisConfiguration))));
+        $query = new Query('randomId', 'http://file.jpg', 'RedisStore', md5(json_encode(array_values($this->redisConfiguration['delivery']['configuration']))));
         $query2 = unserialize(serialize($query));
         $this->assertEquals($query, $query2);
     }
