@@ -82,6 +82,7 @@ class FilesystemStore implements DeliveryInterface
 
     protected function getFile($key, $shouldNotExist = false)
     {
+        $key = (string) $key;
         $pathfile = $this->path;
 
         $length = strlen($key);

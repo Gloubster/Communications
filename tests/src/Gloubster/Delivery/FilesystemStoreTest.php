@@ -59,6 +59,23 @@ class FilesystemStoreTest extends AbstractDelivery
 
     /**
      * @covers Gloubster\Delivery\FilesystemStore::deliver
+     */
+    public function testDeliverWithIntAsKey()
+    {
+        $result = $this->getResultMock();
+
+        $result->expects($this->once())
+            ->method('serialize')
+            ->will(
+                $this->returnValue(json_encode(array()))
+        );
+
+        $this->object = new FilesystemStore($this->dir, 'signature');
+        $this->object->deliver(1234567, $result);
+    }
+
+    /**
+     * @covers Gloubster\Delivery\FilesystemStore::deliver
      * @covers Gloubster\Delivery\FilesystemStore::getFile
      * @expectedException Gloubster\Exception\RuntimeException
      */
