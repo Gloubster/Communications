@@ -90,7 +90,7 @@ class FilesystemStore implements DeliveryInterface
             if ($i % 3 === 0) {
                 $pathfile .= DIRECTORY_SEPARATOR;
             }
-            $pathfile .= $i;
+            $pathfile .= $key[$i];
         }
 
         if (true === $shouldNotExist && file_exists($pathfile)) {
@@ -121,6 +121,8 @@ class FilesystemStore implements DeliveryInterface
             throw new InvalidArgumentException(sprintf('Path `%s` is not writable'));
         }
 
-        return new static($configuration['path'], md5(json_encode(array(filectime($configuration['path'])))));
+        $path = rtrim($configuration['path'], '/');
+
+        return new static($path, md5(json_encode(array($path))));
     }
 }
