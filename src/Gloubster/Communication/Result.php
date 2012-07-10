@@ -24,6 +24,7 @@ class Result implements \Serializable
     protected $stop;
     protected $infos;
     protected $errors;
+    protected $timers;
 
     public function __construct($jobHandle, $uuid, $workload, $binaryData, $workerName, $start, $stop, array $infos = array(), array $errors = array())
     {
@@ -41,6 +42,16 @@ class Result implements \Serializable
     public function getJobHandle()
     {
         return $this->jobHandle;
+    }
+
+    public function getTimers()
+    {
+        return $this->timers;
+    }
+
+    public function setTimers(array $timers)
+    {
+        return $this->timers = $timers;
     }
 
     public function getUuid()
@@ -98,7 +109,7 @@ class Result implements \Serializable
                 $data = base64_encode($data);
             }
 
-            if(in_array($prop, array('start', 'stop'))){
+            if(in_array($prop, array('start', 'stop', 'timers'))){
                 $data = serialize($data);
             }
 
@@ -120,7 +131,7 @@ class Result implements \Serializable
                 $data = base64_decode($data);
             }
 
-            if(in_array($prop, array('start', 'stop'))){
+            if(in_array($prop, array('start', 'stop', 'timers'))){
                 $data = unserialize($data);
             }
 
