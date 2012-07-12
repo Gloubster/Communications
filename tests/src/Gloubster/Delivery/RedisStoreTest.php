@@ -27,6 +27,7 @@ class RedisStoreTest extends AbstractDelivery
     public function testBasic()
     {
         $redis = new \Redis();
+        $redis->connect('localhost', 6379);
         $signature = 'signature';
         $this->object = new RedisStore($redis, $signature);
         $this->assertEquals('RedisStore', $this->object->getName());
@@ -45,16 +46,16 @@ class RedisStoreTest extends AbstractDelivery
         $redis = $this->getMock('\Redis');
         $result = $this->getResultMock();
 
-        $result->expects($this->once())
+        $result->expects($this->any())
             ->method('serialize')
             ->will(
                 $this->returnValue(json_encode(array()))
         );
         $redis->expects($this->once())
-            ->method('set');
+            ->method('mset');
 
         $this->object = new RedisStore($redis, 'signature');
-        $this->object->deliver('test', $result);
+        $this->object->deliver('test', $result, 'binary datas');
     }
 
     /**
@@ -71,11 +72,11 @@ class RedisStoreTest extends AbstractDelivery
         $result = $this->getResultMock();
 
         $redis->expects($this->once())
-            ->method('set')
+            ->method('mset')
             ->will($this->returnValue(false));
 
         $this->object = new RedisStore($redis, 'signature');
-        $this->object->deliver('test', $result);
+        $this->object->deliver('test', $result, 'binary datas');
     }
 
     /**
@@ -92,11 +93,11 @@ class RedisStoreTest extends AbstractDelivery
         $result = $this->getResultMock();
 
         $redis->expects($this->once())
-            ->method('set')
+            ->method('mset')
             ->will($this->throwException(new \RedisException()));
 
         $this->object = new RedisStore($redis, 'signature');
-        $this->object->deliver('test', $result);
+        $this->object->deliver('test', $result, 'binary datas');
     }
 
     /**
@@ -113,10 +114,30 @@ class RedisStoreTest extends AbstractDelivery
         $redis = $this->getMock('\Redis');
         $redis->expects($this->once())
             ->method('get')
-            ->will($this->returnValue(serialize($result)));
+            ->will($this->returnValue($result));
 
         $this->object = new RedisStore($redis, 'signature');
         $this->object->retrieve('test');
+    }
+
+    /**
+     * @covers Gloubster\Delivery\RedisStore::retrieveData
+     */
+    public function testRetrieveData()
+    {
+        if (false === class_exists('\\Redis')) {
+            $this->markTestSkipped('This test requires Redis extension');
+        }
+
+        $redis = $this->getMock('\Redis');
+        $redis->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue('some binary datas'));
+
+        $this->object = new RedisStore($redis, 'signature');
+        $datas = $this->object->retrieveData('test');
+
+        $this->assertEquals($datas, 'some binary datas');
     }
 
     /**
@@ -140,6 +161,26 @@ class RedisStoreTest extends AbstractDelivery
     }
 
     /**
+     * @covers Gloubster\Delivery\RedisStore::retrieveData
+     * @covers Gloubster\Delivery\Exception\ItemDoesNotExistsException
+     * @expectedException Gloubster\Delivery\Exception\ItemDoesNotExistsException
+     */
+    public function testRetrieveDataDoesNotWork()
+    {
+        if (false === class_exists('\\Redis')) {
+            $this->markTestSkipped('This test requires Redis extension');
+        }
+
+        $redis = $this->getMock('\Redis');
+        $redis->expects($this->once())
+            ->method('get')
+            ->will($this->returnValue(false));
+
+        $this->object = new RedisStore($redis, 'signature');
+        $datas = $this->object->retrieveData('test');
+    }
+
+    /**
      * @covers Gloubster\Delivery\RedisStore::retrieve
      * @expectedException Gloubster\Exception\RuntimeException
      */
@@ -150,7 +191,6 @@ class RedisStoreTest extends AbstractDelivery
         }
 
         $redis = $this->getMock('\Redis');
-        $result = $this->getResultMock();
 
         $redis->expects($this->once())
             ->method('get')
@@ -180,6 +220,25 @@ class RedisStoreTest extends AbstractDelivery
     }
 
     /**
+     * @covers Gloubster\Delivery\RedisStore::retrieveData
+     * @expectedException Gloubster\Exception\RuntimeException
+     */
+    public function testRetrieveDataThrowException()
+    {
+        if (false === class_exists('\\Redis')) {
+            $this->markTestSkipped('This test requires Redis extension');
+        }
+
+        $redis = $this->getMock('\Redis');
+        $redis->expects($this->once())
+            ->method('get')
+            ->will($this->throwException(new \RedisException));
+
+        $this->object = new RedisStore($redis, 'signature');
+        $this->object->retrieveData('test');
+    }
+
+    /**
      * @covers Gloubster\Delivery\RedisStore::retrieve
      * @covers Gloubster\Delivery\RedisStore::deliver
      */
@@ -190,9 +249,11 @@ class RedisStoreTest extends AbstractDelivery
         $result = $this->getResultObject();
 
         $this->object = new RedisStore($redis, 'signature');
-        $this->object->deliver('test', $result);
+        $this->object->deliver('test', $result, 'binary datas');
         $data = $this->object->retrieve('test');
         $this->assertEquals($result, $data);
+        $data = $this->object->retrieveData('test');
+        $this->assertEquals('binary datas', $data);
     }
 
     /**

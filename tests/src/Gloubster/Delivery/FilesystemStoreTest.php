@@ -54,7 +54,7 @@ class FilesystemStoreTest extends AbstractDelivery
         );
 
         $this->object = new FilesystemStore($this->dir, 'signature');
-        $this->object->deliver('test', $result);
+        $this->object->deliver('test', $result, 'binary datas');
     }
 
     /**
@@ -71,7 +71,7 @@ class FilesystemStoreTest extends AbstractDelivery
         );
 
         $this->object = new FilesystemStore($this->dir, 'signature');
-        $this->object->deliver(1234567, $result);
+        $this->object->deliver(1234567, $result, 'binary datas');
     }
 
     /**
@@ -84,7 +84,7 @@ class FilesystemStoreTest extends AbstractDelivery
         $result = $this->getResultMock();
 
         $this->object = new FilesystemStore('/rhino/doro', 'signature');
-        $this->object->deliver('test', $result);
+        $this->object->deliver('test', $result, 'binary datas');
     }
 
     /**
@@ -97,8 +97,8 @@ class FilesystemStoreTest extends AbstractDelivery
         $result = $this->getResultMock();
 
         $this->object = new FilesystemStore($this->dir, 'signature');
-        $this->object->deliver('test', $result);
-        $this->object->deliver('test', $result);
+        $this->object->deliver('test', $result, 'binary datas');
+        $this->object->deliver('test', $result, 'binary datas');
     }
 
     /**
@@ -110,9 +110,21 @@ class FilesystemStoreTest extends AbstractDelivery
         $result = $this->getResultObject();
 
         $this->object = new FilesystemStore($this->dir, 'signature');
-        $this->object->deliver('test', $result);
+        $this->object->deliver('test', $result, 'binary datas');
 
         $this->assertEquals($result, $this->object->retrieve('test'));
+    }
+
+    /**
+     * @covers Gloubster\Delivery\FilesystemStore::getFile
+     * @covers Gloubster\Delivery\FilesystemStore::retrieveData
+     */
+    public function testRetrieveData()
+    {
+        $this->object = new FilesystemStore($this->dir, 'signature');
+        $this->object->deliver('test', $this->getResultObject(), 'binary datas');
+
+        $this->assertEquals('binary datas', $this->object->retrieveData('test'));
     }
 
     /**
@@ -121,10 +133,18 @@ class FilesystemStoreTest extends AbstractDelivery
      */
     public function testRetrieveShouldFail()
     {
-        $result = $this->getResultMock();
-
         $this->object = new FilesystemStore($this->dir, 'signature');
         $this->object->retrieve('bidule');
+    }
+
+    /**
+     * @covers Gloubster\Delivery\FilesystemStore::retrieveData
+     * @expectedException Gloubster\Delivery\Exception\ItemDoesNotExistsException
+     */
+    public function testRetrieveDataShouldFail()
+    {
+        $this->object = new FilesystemStore($this->dir, 'signature');
+        $this->object->retrieveData('bidule');
     }
 
     /**
@@ -142,7 +162,7 @@ class FilesystemStoreTest extends AbstractDelivery
         );
 
         $this->object = new FilesystemStore($this->dir, 'signature');
-        $this->object->deliver('bidule', $result);
+        $this->object->deliver('bidule', $result, 'binary datas');
         $this->object->retrieve('bidule');
     }
 

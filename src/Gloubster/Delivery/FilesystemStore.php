@@ -55,9 +55,12 @@ class FilesystemStore implements DeliveryInterface
     /**
      * {@inheritdoc}
      */
-    public function deliver($key, Result $result)
+    public function deliver($key, Result $result, $binaryData)
     {
-        if (false === file_put_contents($this->getFile($key, true), serialize($result))) {
+        if (false === file_put_contents($this->getFile('result-' . $key, true), serialize($result))) {
+            throw new RuntimeException('Unable to deliver the result');
+        }
+        if (false === file_put_contents($this->getFile('binary-' . $key, true), $binaryData)) {
             throw new RuntimeException('Unable to deliver the result');
         }
     }
@@ -67,8 +70,8 @@ class FilesystemStore implements DeliveryInterface
      */
     public function retrieve($key)
     {
-        if (false === $ret = @file_get_contents($this->getFile($key))) {
-            throw new ItemDoesNotExistsException(sprintf('Item %s does not exists', $key));
+        if (false === $ret = @file_get_contents($this->getFile('result-' . $key))) {
+            throw new ItemDoesNotExistsException(sprintf('Item %s does not exists', 'result-' . $key));
         }
 
         $unserialized = @unserialize($ret);
@@ -78,6 +81,18 @@ class FilesystemStore implements DeliveryInterface
         }
 
         return $unserialized;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function retrieveData($key)
+    {
+        if (false === $ret = @file_get_contents($this->getFile('binary-' . $key))) {
+            throw new ItemDoesNotExistsException(sprintf('Item %s does not exists', 'binary-' . $key));
+        }
+
+        return $ret;
     }
 
     protected function getFile($key, $shouldNotExist = false)

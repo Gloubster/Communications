@@ -34,6 +34,11 @@ class RedisStore implements DeliveryInterface
     {
         $this->redis = $redis;
         $this->signature = $signature;
+
+        if (false === $this->redis->setOption(\Redis::OPT_SERIALIZER, \Redis::SERIALIZER_IGBINARY)) {
+            $this->redis->setOption(\Redis::OPT_SERIALIZER, \Redis::SERIALIZER_PHP);
+        }
+        $this->redis->setOption(\Redis::OPT_PREFIX, 'gloubster:');
     }
 
     /**
@@ -68,11 +73,17 @@ class RedisStore implements DeliveryInterface
     /**
      * {@inheritdoc}
      */
-    public function deliver($key, Result $result)
+    public function deliver($key, Result $result, $binaryData)
     {
         try {
-            if (false === $this->redis->set($key, serialize($result))) {
+            $datas = array('result-' . $key => $result, 'binary-' . $key => $binaryData);
+
+            if (false === $this->redis->mset($datas)) {
                 throw new RuntimeException('Unable to deliver the result');
+            }
+
+            foreach (array_keys($datas) as $redisKey) {
+                $this->redis->setTimeout($redisKey, 3600 * 7);
             }
         } catch (\RedisException $e) {
             throw new RuntimeException('Something wrong happened with '
@@ -86,17 +97,32 @@ class RedisStore implements DeliveryInterface
     public function retrieve($key)
     {
         try {
-            if (false === $ret = $this->redis->get($key)) {
-                throw new ItemDoesNotExistsException(sprintf('Item %s does not exists', $key));
+            if (false === $ret = $this->redis->get('result-' . $key)) {
+                throw new ItemDoesNotExistsException(sprintf('Item %s does not exists', 'result-' . $key));
             }
 
-            $unserialized = @unserialize($ret);
-
-            if ( ! $unserialized instanceof Result) {
+            if ( ! $ret instanceof Result) {
                 throw new RuntimeException('Data were corrupted');
             }
 
-            return $unserialized;
+            return $ret;
+        } catch (\RedisException $e) {
+            throw new RuntimeException('Something wrong happened with '
+                . 'Redis Server, check connection and sever load');
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function retrieveData($key)
+    {
+        try {
+            if (false === $ret = $this->redis->get('binary-' . $key)) {
+                throw new ItemDoesNotExistsException(sprintf('Item %s does not exists', 'binary-' . $key));
+            }
+
+            return $ret;
         } catch (\RedisException $e) {
             throw new RuntimeException('Something wrong happened with '
                 . 'Redis Server, check connection and sever load');

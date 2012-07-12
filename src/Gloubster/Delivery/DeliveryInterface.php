@@ -46,10 +46,11 @@ interface DeliveryInterface
      *
      * @param string $uuid The unique Id related to the job
      * @param Result $result The result of the job
+     * @param string $binaryData The binaryData attached
      *
      * @throws Gloubster\Exception\RuntimeException On failure
      */
-    public function deliver($uuid, Result $result);
+    public function deliver($uuid, Result $result, $binaryData);
 
     /**
      * The client use the retrieve method to retrieve the result of the worker
@@ -62,6 +63,16 @@ interface DeliveryInterface
      * @return Result
      */
     public function retrieve($uuid);
+
+    /**
+     * The client use the retrieveData method to retrieve the output of the
+     * transform
+     *
+     * @param type $uuid The unique Id related to the job
+     *
+     * @return string
+     */
+    public function retrieveData($uuid);
 
     /**
      * Build the delivery giving the configuration
