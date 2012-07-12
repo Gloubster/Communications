@@ -19,5 +19,10 @@ class NullProxy extends AbstractProxySource
     {
         return $datas;
     }
+    
+    public static function build(array $configuration)
+    {
+        return new static;
+    }
 }
 

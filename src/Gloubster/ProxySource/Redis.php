@@ -30,5 +30,30 @@ class Redis extends AbstractProxySource
 
         return $datas;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function build(array $configuration)
+    {
+        if (false === isset($configuration['host']) || false === isset($configuration['port'])) {
+            throw new InvalidArgumentException('Configuration must contain host and port keys');
+        }
+
+        $redis = new \Redis();
+        $redis->pconnect($configuration['host'], $configuration['port']);
+
+        try {
+
+            if ('+PONG' !== $redis->ping()) {
+                throw new RuntimeException('Unable to connect to redis server');
+            }
+        } catch (\RedisException $e) {
+            throw new RuntimeException('Something wrong happened with '
+                . 'Redis Server, check connection and sever load');
+        }
+
+        return new static($redis);
+    }
 }
 
