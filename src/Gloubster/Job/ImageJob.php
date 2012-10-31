@@ -26,7 +26,7 @@ class ImageJob implements JobInterface
 
     public function getAMQPMessage()
     {
-        return json_encode(array(
+        return serialize(array(
             'source'      => $this->source,
             'delivery'    => $this->delivery,
             'parameters'  => $this->parameters,

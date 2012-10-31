@@ -29,4 +29,22 @@ class FileSystem implements DeliveryInterface
     {
         copy($pathfile, $this->target);
     }
+
+    public function serialize()
+    {
+        return json_encode(array('target'=>$this->target));
+    }
+
+    public function unserialize($serialized)
+    {
+        $data = json_decode($serialized, true);
+
+        if (!$data) {
+            throw new \RuntimeException('Unable to unserialize data');
+        }
+
+        $this->target = $data['target'];
+
+        return $this;
+    }
 }

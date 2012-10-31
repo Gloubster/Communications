@@ -11,13 +11,25 @@
 
 namespace Gloubster\Job;
 
-class VideoJob implements JobInterface, \Serializable
+class ImageJob implements JobInterface
 {
-    public function getBody()
+    private $source;
+    private $parameters;
+    private $delivery;
+
+    public function __construct($source, DeliveryInterface $delivery, array $parameters = array())
     {
-        return json_encode(array(
-            'path'=>'file://path/to/image',
-            'resolution'=>72
+        $this->source = $source;
+        $this->delivery = $delivery;
+        $this->parameters = $parameters;
+    }
+
+    public function getAMQPMessage()
+    {
+        return serialize(array(
+            'source'      => $this->source,
+            'delivery'    => $this->delivery,
+            'parameters'  => $this->parameters,
         ));
     }
 
@@ -30,4 +42,5 @@ class VideoJob implements JobInterface, \Serializable
     {
         return 'phrasea.subdefs.dispatcher';
     }
+
 }
