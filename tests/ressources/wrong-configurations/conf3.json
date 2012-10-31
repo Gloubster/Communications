@@ -1,15 +1,8 @@
 {
-    "gearman-servers":[
-        {
-            "host":"127.0.0.1",
-            "port":4730
-        }
-    ],
-    "delivery":{
-        "name":"RedisStore",
-        "conf":{
-            "host":"redis-server",
-            "port":6379
-        }
+    "server": {
+            "host": "127.0.0.1",
+            "port": 4730,
+            "user": 'user',
+            "vhost": '/'
     }
 }
