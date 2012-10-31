@@ -31,8 +31,8 @@ class Configuration implements \ArrayAccess
 
     public function __construct($json, array $extra_schemas = array())
     {
-        $schemaFile = __DIR__ . '/../../ressources/configuration.schema.json';
-        $schemas = array_merge(array(@file_get_contents($schemaFile)), $extra_schemas);
+        $schemaFile = __DIR__ . '/../../resources/configuration.schema.json';
+        $schemas = array_merge(array(file_get_contents($schemaFile)), $extra_schemas);
 
         foreach ($schemas as $schema) {
             $jsonSchema = json_decode($schema);

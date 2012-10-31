@@ -12,10 +12,7 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     {
         $conf = new Configuration($configuration);
 
-        $this->assertTrue(isset($conf['gearman-servers']));
-        $this->assertTrue(isset($conf['delivery']));
-        $this->assertTrue(isset($conf['delivery']['name']));
-        $this->assertTrue(isset($conf['delivery']['configuration']));
+        $this->assertTrue(isset($conf['server']));
 
         $conf['key'] = 'value';
         $this->assertEquals('value', $conf['key']);
