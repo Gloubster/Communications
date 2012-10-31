@@ -1,0 +1,40 @@
+{
+    "name": "Configuration",
+    "type": "object",
+    "additionalProperties": true,
+    "properties": {
+        "server": {
+            "type": "object",
+            "description": "RabbitMQ Server",
+            "required": true,
+            "additionalProperties": true,
+            "properties": {
+                "host": {
+                    "type": "string",
+                    "description": "RabbitMQ Host",
+                    "required": true
+                },
+                "port": {
+                    "type": "number",
+                    "description": "RabbitMQ Port",
+                    "required": true
+                },
+                "user": {
+                    "type": "string",
+                    "description": "RabbitMQ User",
+                    "required": true
+                },
+                "password": {
+                    "type": ["string", "null"],
+                    "description": "RabbitMQ Passwird",
+                    "required": true
+                },
+                "vhost": {
+                    "type": "string",
+                    "description": "RabbitMQ Vhost",
+                    "required": true
+                }
+            }
+        }
+    }
+}
