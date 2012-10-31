@@ -11,6 +11,8 @@
 
 namespace Gloubster\Job;
 
+use Gloubster\Delivery\DeliveryInterface;
+
 class ImageJob implements JobInterface
 {
     private $source;

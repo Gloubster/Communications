@@ -11,7 +11,9 @@
 
 namespace Gloubster\Job;
 
-class ImageJob implements JobInterface
+use Gloubster\Delivery\DeliveryInterface;
+
+class VideoJob implements JobInterface
 {
     private $source;
     private $parameters;
