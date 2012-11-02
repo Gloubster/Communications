@@ -13,6 +13,23 @@ namespace Gloubster\Job;
 
 interface JobInterface extends \Serializable
 {
+    public function isOk();
+
+    public function requireReceipt();
+
+    public function getDelivery();
+
+    public function getBeginning();
+
+    public function getEnd();
+
+    public function setProcessDuration($duration);
+
+    public function getProcessDuration();
+
+    public function setDeliveryDuration($duration);
+
+    public function getDeliveryDuration();
 
     public function getRoutingKey();
 

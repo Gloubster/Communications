@@ -13,6 +13,55 @@ namespace Gloubster\Job;
 
 abstract class AbstractJob implements JobInterface
 {
+    private $beginning;
+    private $end;
+    private $processDuration;
+    private $deliveryDuration;
+
+    public function __construct()
+    {
+        $this->beginning = new \DateTime();
+    }
+
+    public function getBeginning()
+    {
+        return $this->beginning;
+    }
+
+    public function getEnd()
+    {
+        return $this->end;
+    }
+
+    public function setProcessDuration($duration)
+    {
+        $this->processDuration = $duration;
+
+        return $this;
+    }
+
+    public function getProcessDuration()
+    {
+        return $this->processDuration;
+    }
+
+    public function setDeliveryDuration($duration)
+    {
+        $this->deliveryDuration = $duration;
+
+        return $this;
+    }
+
+    public function getDeliveryDuration()
+    {
+        return $this->deliveryDuration;
+    }
+
+    public function requireReceipt()
+    {
+        return false;
+    }
+
     public function serialize()
     {
         $data = array();
