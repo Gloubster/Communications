@@ -11,13 +11,8 @@
 
 namespace Gloubster\Job;
 
-interface JobInterface
+interface JobInterface extends \Serializable
 {
-
-    /**
-     * The message as it will be send to AMQP server
-     */
-    public function getAMQPMessage();
 
     public function getRoutingKey();
 

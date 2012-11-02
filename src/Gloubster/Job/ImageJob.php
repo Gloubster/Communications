@@ -13,7 +13,7 @@ namespace Gloubster\Job;
 
 use Gloubster\Delivery\DeliveryInterface;
 
-class ImageJob implements JobInterface
+class ImageJob extends AbstractJob
 {
     private $source;
     private $parameters;
@@ -26,15 +26,6 @@ class ImageJob implements JobInterface
         $this->parameters = $parameters;
     }
 
-    public function getAMQPMessage()
-    {
-        return serialize(array(
-            'source'      => $this->source,
-            'delivery'    => $this->delivery,
-            'parameters'  => $this->parameters,
-        ));
-    }
-
     public function getRoutingKey()
     {
         return 'phrasea.subdefs.image';
@@ -44,5 +35,4 @@ class ImageJob implements JobInterface
     {
         return 'phrasea.subdefs.dispatcher';
     }
-
 }

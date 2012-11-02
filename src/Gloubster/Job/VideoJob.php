@@ -13,7 +13,7 @@ namespace Gloubster\Job;
 
 use Gloubster\Delivery\DeliveryInterface;
 
-class VideoJob implements JobInterface
+class VideoJob extends AbstractJob
 {
     private $source;
     private $parameters;
@@ -24,15 +24,6 @@ class VideoJob implements JobInterface
         $this->source = $source;
         $this->delivery = $delivery;
         $this->parameters = $parameters;
-    }
-
-    public function getAMQPMessage()
-    {
-        return serialize(array(
-            'source'      => $this->source,
-            'delivery'    => $this->delivery,
-            'parameters'  => $this->parameters,
-        ));
     }
 
     public function getRoutingKey()
