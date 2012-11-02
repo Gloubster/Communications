@@ -6,8 +6,7 @@ before_script:
   - git clone https://github.com/nicolasff/phpredis.git
   - sh -c "cd phpredis && phpize && ./configure && make && sudo make install"
   - echo "extension=redis.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install --dev
+  - composer install --dev
 
 php:
   - 5.3
