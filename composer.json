@@ -10,8 +10,8 @@
         "justinrainbow/json-schema": "*"
     },
     "require-dev": {
-        "symfony/finder": "2.1.*",
-        "symfony/filesystem": "2.1.*"
+        "symfony/finder": ">=2.0,<=2.2.x-dev",
+        "symfony/filesystem": ">=2.0,<=2.2.x-dev"
     },
     "autoload": {
         "psr-0": {
