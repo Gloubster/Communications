@@ -15,12 +15,26 @@ abstract class AbstractJob implements JobInterface
 {
     private $beginning;
     private $end;
+    private $error;
     private $processDuration;
     private $deliveryDuration;
 
     public function __construct()
     {
         $this->beginning = new \DateTime();
+        $this->error = false;
+    }
+
+    public function setError($boolean)
+    {
+        $this->error = (Boolean) $boolean;
+
+        return $this;
+    }
+
+    public function isOnError()
+    {
+        return $this->error;
     }
 
     public function getBeginning()

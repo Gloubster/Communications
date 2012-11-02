@@ -15,6 +15,10 @@ interface JobInterface extends \Serializable
 {
     public function isOk();
 
+    public function setError($boolean);
+    
+    public function isOnError();
+
     public function requireReceipt();
 
     public function getDelivery();
