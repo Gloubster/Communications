@@ -1,5 +1,5 @@
 {
-    "hash": "3d512509adeef5d68cb0ef26b3e62bec",
+    "hash": "ee32d3d562638f662340b54aea19ae55",
     "packages": [
         {
             "name": "justinrainbow/json-schema",
@@ -7,18 +7,18 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/justinrainbow/json-schema.git",
-                "reference": "535962c9997d0b09582189914cfae1a5ed1e3317"
+                "reference": "0ba1d4e24e5d59f149cd37050d8b0b7fd652e2c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/justinrainbow/json-schema/zipball/535962c9997d0b09582189914cfae1a5ed1e3317",
-                "reference": "535962c9997d0b09582189914cfae1a5ed1e3317",
+                "url": "https://github.com/justinrainbow/json-schema/zipball/0ba1d4e24e5d59f149cd37050d8b0b7fd652e2c3",
+                "reference": "0ba1d4e24e5d59f149cd37050d8b0b7fd652e2c3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "1337277049",
+            "time": "1345327760",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -33,26 +33,20 @@
                 {
                     "name": "Igor Wiedler",
                     "email": "igor@wiedler.ch",
-                    "homepage": "http://wiedler.ch/igor/",
-                    "role": null
+                    "homepage": "http://wiedler.ch/igor/"
                 },
                 {
                     "name": "Bruno Prieto Reis",
-                    "email": "bruno.p.reis@gmail.com",
-                    "homepage": null,
-                    "role": null
+                    "email": "bruno.p.reis@gmail.com"
                 },
                 {
                     "name": "Justin Rainbow",
-                    "email": "justin.rainbow@gmail.com",
-                    "homepage": null,
-                    "role": null
+                    "email": "justin.rainbow@gmail.com"
                 },
                 {
                     "name": "Robert Schönthal",
                     "email": "seroscho@googlemail.com",
-                    "homepage": "http://digitalkaoz.net",
-                    "role": null
+                    "homepage": "http://digitalkaoz.net"
                 }
             ],
             "description": "A library to validate a json schema.",
@@ -67,7 +61,7 @@
     "aliases": [
 
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": [
 
     ]
