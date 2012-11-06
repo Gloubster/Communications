@@ -1,5 +1,5 @@
 {
-    "hash": "ee32d3d562638f662340b54aea19ae55",
+    "hash": "d50c434bb4a84439f0cd242b62e4d885",
     "packages": [
         {
             "name": "justinrainbow/json-schema",
@@ -7,18 +7,18 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/justinrainbow/json-schema.git",
-                "reference": "0ba1d4e24e5d59f149cd37050d8b0b7fd652e2c3"
+                "reference": "6573b23bed508c6744a61ffbe196a73a327761b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/justinrainbow/json-schema/zipball/0ba1d4e24e5d59f149cd37050d8b0b7fd652e2c3",
-                "reference": "0ba1d4e24e5d59f149cd37050d8b0b7fd652e2c3",
+                "url": "https://github.com/justinrainbow/json-schema/archive/6573b23bed508c6744a61ffbe196a73a327761b7.zip",
+                "reference": "6573b23bed508c6744a61ffbe196a73a327761b7",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "1345327760",
+            "time": "1351872170",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -55,14 +55,147 @@
                 "json",
                 "schema"
             ]
+        },
+        {
+            "name": "videlalvaro/php-amqplib",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/videlalvaro/php-amqplib.git",
+                "reference": "237870120238f37d66703583ca0e186b4567b1a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/videlalvaro/php-amqplib/zipball/237870120238f37d66703583ca0e186b4567b1a9",
+                "reference": "237870120238f37d66703583ca0e186b4567b1a9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "time": "1351776374",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "PhpAmqpLib": ""
+                }
+            },
+            "authors": [
+                {
+                    "name": "Alvaro Videla"
+                }
+            ],
+            "description": "This library is a pure PHP implementation of the AMQP protocol. It's been tested against RabbitMQ.",
+            "homepage": "https://github.com/videlalvaro/php-amqplib/",
+            "keywords": [
+                "queue",
+                "rabbitmq",
+                "message"
+            ]
         }
     ],
-    "packages-dev": null,
+    "packages-dev": [
+        {
+            "name": "symfony/filesystem",
+            "version": "dev-master",
+            "target-dir": "Symfony/Component/Filesystem",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Filesystem",
+                "reference": "ef5f0ab0c2115494911118f7014be5ebddbf172f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/symfony/Filesystem/zipball/ef5f0ab0c2115494911118f7014be5ebddbf172f",
+                "reference": "ef5f0ab0c2115494911118f7014be5ebddbf172f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "time": "1351093287",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Filesystem\\": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Filesystem Component",
+            "homepage": "http://symfony.com"
+        },
+        {
+            "name": "symfony/finder",
+            "version": "dev-master",
+            "target-dir": "Symfony/Component/Finder",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Finder",
+                "reference": "5027186f852f928c53567f3d599d2d9ceda449d0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/symfony/Finder/zipball/5027186f852f928c53567f3d599d2d9ceda449d0",
+                "reference": "5027186f852f928c53567f3d599d2d9ceda449d0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "time": "1352017821",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Finder\\": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Finder Component",
+            "homepage": "http://symfony.com"
+        }
+    ],
     "aliases": [
 
     ],
     "minimum-stability": "dev",
-    "stability-flags": [
-
-    ]
+    "stability-flags": {
+        "videlalvaro/php-amqplib": 20
+    }
 }

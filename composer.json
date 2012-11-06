@@ -8,7 +8,8 @@
         }
     ],
     "require": {
-        "justinrainbow/json-schema": "*"
+        "justinrainbow/json-schema": "*",
+        "videlalvaro/php-amqplib": "dev-master"
     },
     "require-dev": {
         "symfony/finder": ">=2.0,<=2.2.x-dev",
