@@ -26,13 +26,100 @@
                 },
                 "password": {
                     "type": ["string", "null"],
-                    "description": "RabbitMQ Passwird",
+                    "description": "RabbitMQ Password",
                     "required": true
                 },
                 "vhost": {
                     "type": "string",
                     "description": "RabbitMQ Vhost",
                     "required": true
+                },
+                "ssl": {
+                    "type": "object",
+                    "description": "SSL configuration",
+                    "required": false,
+                    "requires": ["enable", "options"],
+                    "additionalProperties": true,
+                    "properties": {
+                        "enable": {
+                            "type": "boolean",
+                            "description": "Wheter to use SSL connection or not",
+                            "required": false
+                        },
+                        "options": {
+                            "type": "object",
+                            "description": "SSL options, see http://www.php.net/manual/en/context.ssl.php",
+                            "required": false,
+                            "additionalProperties": true,
+                            "properties": {
+                                "verify_peer": {
+                                    "type": "boolean",
+                                    "description": "Require verification of SSL certificate used.",
+                                    "required": false
+                                },
+                                "allow_self_signed": {
+                                    "type": "boolean",
+                                    "description": "Allow self-signed certificates. Requires verify_peer.",
+                                    "required": false
+                                },
+                                "cafile": {
+                                    "type": "string",
+                                    "description": "Location of Certificate Authority file on local filesystem which should be used with the verify_peer context option to authenticate the identity of the remote peer.",
+                                    "required": false
+                                },
+                                "capath": {
+                                    "type": "string",
+                                    "description": "If cafile is not specified or if the certificate is not found there, the directory pointed to by capath is searched for a suitable certificate. capath must be a correctly hashed certificate directory.",
+                                    "required": false
+                                },
+                                "local_cert": {
+                                    "type": "string",
+                                    "description": "Path to local certificate file on filesystem. It must be a PEM encoded file which contains your certificate and private key. It can optionally contain the certificate chain of issuers.",
+                                    "required": false
+                                },
+                                "passphrase": {
+                                    "type": "string",
+                                    "description": "Passphrase with which your local_cert file was encoded.",
+                                    "required": false
+                                },
+                                "CN_match": {
+                                    "type": "string",
+                                    "description": "Common Name we are expecting. PHP will perform limited wildcard matching. If the Common Name does not match this, the connection attempt will fail.",
+                                    "required": false
+                                },
+                                "verify_depth": {
+                                    "type": "integer",
+                                    "description": "Abort if the certificate chain is too deep.",
+                                    "required": false
+                                },
+                                "ciphers": {
+                                    "type": "string",
+                                    "description": "Sets the list of available ciphers. The format of the string is described in http://www.openssl.org/docs/apps/ciphers.html#CIPHER_LIST_FORMAT",
+                                    "required": false
+                                },
+                                "capture_peer_cert": {
+                                    "type": "boolean",
+                                    "description": "If set to TRUE a peer_certificate context option will be created containing the peer certificate.",
+                                    "required": false
+                                },
+                                "capture_peer_cert_chain": {
+                                    "type": "boolean",
+                                    "description": "If set to TRUE a peer_certificate_chain context option will be created containing the certificate chain.",
+                                    "required": false
+                                },
+                                "SNI_enabled": {
+                                    "type": "boolean",
+                                    "description": "If set to TRUE server name indication will be enabled. Enabling SNI allows multiple certificates on the same IP address.",
+                                    "required": false
+                                },
+                                "SNI_server_name": {
+                                    "type": "string",
+                                    "description": "If set, then this value will be used as server name for server name indication. If this value is not set, then the server name is guessed based on the hostname used when opening the stream.",
+                                    "required": false
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
