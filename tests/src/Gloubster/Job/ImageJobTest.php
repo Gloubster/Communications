@@ -21,18 +21,29 @@ class ImageJobTest extends AbstractJobTest
      */
     public function testIsImageJobOk()
     {
-        $this->assertFalse($this->object->isOk());
-        $this->object->setParameters(array('format'=>'jpg'));
-        $this->assertTrue($this->object->isOk());
+        $object = $this->getJob();
+        $this->assertFalse($object->isOk());
+        $object->setParameters(array('format'=>'jpg'));
+        $this->assertTrue($object->isOk());
     }
 
     /**
      * @covers Gloubster\Job\ImageJob::isOk
-     * @expectedException RuntimeException
+     * @expectedException Gloubster\Exception\RuntimeException
+     */
+    public function testIsImageJobNotOkWithException()
+    {
+        $this->getJob()->isOk(true);
+    }
+
+    /**
+     * @covers Gloubster\Job\ImageJob::isOk
      */
     public function testIsImageJobOkWithException()
     {
-        $this->object->isOk(true);
+        $object = $this->getJob();
+        $object->setParameters(array('format'=>'jpg'));
+        $this->assertTrue($object->isOk(true));
     }
 
     /**
@@ -40,6 +51,6 @@ class ImageJobTest extends AbstractJobTest
      */
     public function testGetSource()
     {
-        $this->assertTrue(file_exists($this->object->getSource()));
+        $this->assertTrue(file_exists($this->getJob()->getSource()));
     }
 }
