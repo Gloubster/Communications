@@ -4,10 +4,9 @@ services:
   - rabbitmq
 
 before_script:
-  - sudo apt-get update
   - sudo apt-get install -y redis-server
-  - git clone https://github.com/nicolasff/phpredis.git
-  - sh -c "cd phpredis && phpize && ./configure && make && sudo make install"
+  - git clone --quiet https://github.com/nicolasff/phpredis.git
+  - sh -c "cd phpredis && phpize && ./configure && make --silent && sudo make install"
   - echo "extension=redis.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
   - composer install --dev
 
