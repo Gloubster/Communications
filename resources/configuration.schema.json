@@ -38,7 +38,6 @@
                     "type": "object",
                     "description": "SSL configuration",
                     "required": false,
-                    "requires": ["enable", "options"],
                     "additionalProperties": true,
                     "properties": {
                         "enable": {

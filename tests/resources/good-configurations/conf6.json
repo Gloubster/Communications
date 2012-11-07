@@ -1,0 +1,16 @@
+{
+    "server": {
+            "host": "127.0.0.1",
+            "port": 4730,
+            "user": "admin",
+            "password": null,
+            "vhost": "/",
+            "ssl": {
+                "enable": true,
+                "options": {
+                    "verify_peer": true,
+                    "capath": "/path/to/capath"
+                }
+            }
+    }
+}

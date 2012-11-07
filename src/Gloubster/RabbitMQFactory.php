@@ -10,7 +10,7 @@ class RabbitMQFactory
 
     public static function createConnection(Configuration $conf)
     {
-        if (isset($conf['server']['ssl']) && $conf['server']['ssl']['enable']) {
+        if (isset($conf['server']['ssl']) && isset($conf['server']['ssl']['enable']) && true === $conf['server']['ssl']['enable']) {
             $connection = new AMQPSSLConnection(
                 $conf['server']['host'],
                 $conf['server']['port'],
