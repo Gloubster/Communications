@@ -41,7 +41,7 @@ abstract class AbstractJob implements JobInterface
         }
 
         if ($throwException) {
-            throw new RuntimeException(sprintf('Missing parameters : ', implode(', ', $missing)));
+            throw new RuntimeException(sprintf('Missing parameters : %s', implode(', ', $missing)));
         }
 
         return count($missing) === 0;
