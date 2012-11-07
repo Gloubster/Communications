@@ -19,11 +19,47 @@ abstract class AbstractJob implements JobInterface
     private $processDuration;
     private $deliveryDuration;
     private $workerId;
+    protected $parameters;
+    protected $delivery;
 
     public function __construct()
     {
         $this->beginning = new \DateTime();
         $this->error = false;
+    }
+
+    public function isOk($throwException = false)
+    {
+        $missing = array();
+
+        foreach ($this->getMandatoryParameters() as $parameter) {
+            if (!isset($this->parameters[$parameter])) {
+                $missing[] = $parameter;
+            }
+        }
+
+        if ($throwException) {
+            throw new \RuntimeException(sprintf('Missing parameters : ', implode(', ', $missing)));
+        }
+
+        return count($missing) === 0;
+    }
+
+    public function getDelivery()
+    {
+        return $this->delivery;
+    }
+
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
+
+    public function setParameters(array $parameters)
+    {
+        $this->parameters = $parameters;
+
+        return $this;
     }
 
     public function setError($boolean)
@@ -41,6 +77,13 @@ abstract class AbstractJob implements JobInterface
     public function getBeginning()
     {
         return $this->beginning;
+    }
+
+    public function setEnd(\DateTime $date)
+    {
+        $this->end = $date;
+
+        return $this;
     }
 
     public function getEnd()

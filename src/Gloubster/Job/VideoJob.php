@@ -15,15 +15,25 @@ use Gloubster\Delivery\DeliveryInterface;
 
 class VideoJob extends AbstractJob
 {
-    private $source;
-    private $parameters;
-    private $delivery;
+    protected $source;
 
     public function __construct($source, DeliveryInterface $delivery, array $parameters = array())
     {
+        parent::__construct();
+
         $this->source = $source;
         $this->delivery = $delivery;
         $this->parameters = $parameters;
+    }
+
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    public function getMandatoryParameters()
+    {
+        return array();
     }
 
     public function getRoutingKey()

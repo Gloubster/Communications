@@ -13,9 +13,15 @@ namespace Gloubster\Job;
 
 interface JobInterface extends \Serializable
 {
-    public function isOk();
+    public function isOk($throwException = false);
 
     public function setError($boolean);
+
+    public function setParameters(array $parameters);
+
+    public function getParameters();
+
+    public function getMandatoryParameters();
 
     public function isOnError();
 
@@ -30,6 +36,8 @@ interface JobInterface extends \Serializable
     public function getBeginning();
 
     public function getEnd();
+
+    public function setEnd(\DateTime $date);
 
     public function setProcessDuration($duration);
 
