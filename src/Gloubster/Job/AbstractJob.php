@@ -18,6 +18,7 @@ abstract class AbstractJob implements JobInterface
     private $error;
     private $processDuration;
     private $deliveryDuration;
+    private $workerId;
 
     public function __construct()
     {
@@ -69,6 +70,18 @@ abstract class AbstractJob implements JobInterface
     public function getDeliveryDuration()
     {
         return $this->deliveryDuration;
+    }
+
+    public function setWorkerId($id)
+    {
+        $this->workerId = $id;
+
+        return $this;
+    }
+
+    public function getWorkerId()
+    {
+        return $this->workerId;
     }
 
     public function requireReceipt()
