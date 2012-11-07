@@ -21,6 +21,14 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @expectedException \Gloubster\Exception\RuntimeException
+     */
+    public function testWrongConfigurationSchema()
+    {
+        new Configuration(json_encode(array('hello'=>'world')), array('gloubs'));
+    }
+
+    /**
      * @dataProvider getWrongConfigurations
      * @expectedException \Gloubster\Exception\RuntimeException
      */
