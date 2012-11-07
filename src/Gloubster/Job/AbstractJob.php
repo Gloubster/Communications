@@ -26,7 +26,7 @@ abstract class AbstractJob implements JobInterface
 
     public function __construct()
     {
-        $this->beginning = new \DateTime();
+        $this->beginning = microtime(true);
         $this->error = false;
     }
 
@@ -81,9 +81,9 @@ abstract class AbstractJob implements JobInterface
         return $this->beginning;
     }
 
-    public function setEnd(\DateTime $date)
+    public function setEnd($microtime)
     {
-        $this->end = $date;
+        $this->end = $microtime;
 
         return $this;
     }

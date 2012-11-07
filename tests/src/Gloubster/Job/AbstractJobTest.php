@@ -33,8 +33,8 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetBeginning()
     {
-        $this->assertInstanceOf('\\DateTime', $this->object->getBeginning());
-        $this->assertLessThanOrEqual(new \DateTime(), $this->object->getBeginning());
+        $this->assertInternalType('float', $this->object->getBeginning());
+        $this->assertLessThan(microtime(true), $this->object->getBeginning());
     }
 
     /**
@@ -44,9 +44,10 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     public function testGetEnd()
     {
         $this->assertNull($this->object->getEnd());
-        $this->object->setEnd(new \DateTime());
-        $this->assertLessThanOrEqual(new \DateTime(), $this->object->getEnd());
-        $this->assertLessthanOrEqual($this->object->getBeginning(), $this->object->getEnd());
+        $this->object->setEnd(microtime(true));
+        $this->assertInternalType('float', $this->object->getEnd());
+        $this->assertLessThan(microtime(true), $this->object->getEnd());
+        $this->assertLessthan($this->object->getEnd(), $this->object->getBeginning());
     }
 
     /**
@@ -122,7 +123,7 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     public function testSerializeWithData()
     {
         $this->object->setError(true);
-        $this->object->setEnd(new \DateTime());
+        $this->object->setEnd(microtime(true));
         $this->object->setProcessDuration(0.12345678);
         $this->object->setDeliveryDuration(0.987654321);
         $this->object->setWorkerId('Jean Rochefort');

@@ -37,7 +37,7 @@ interface JobInterface extends \Serializable
 
     public function getEnd();
 
-    public function setEnd(\DateTime $date);
+    public function setEnd($microtime);
 
     public function setProcessDuration($duration);
 
