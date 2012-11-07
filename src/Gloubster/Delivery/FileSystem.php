@@ -11,6 +11,8 @@
 
 namespace Gloubster\Delivery;
 
+use Gloubster\Exception\RuntimeException;
+
 class FileSystem implements DeliveryInterface
 {
     private $target;
@@ -32,7 +34,7 @@ class FileSystem implements DeliveryInterface
 
     public function serialize()
     {
-        return json_encode(array('target'=>$this->target));
+        return json_encode(array('target' => $this->target));
     }
 
     public function unserialize($serialized)
@@ -40,7 +42,7 @@ class FileSystem implements DeliveryInterface
         $data = json_decode($serialized, true);
 
         if (!$data) {
-            throw new \RuntimeException('Unable to unserialize data');
+            throw new RuntimeException('Unable to unserialize data');
         }
 
         $this->target = $data['target'];

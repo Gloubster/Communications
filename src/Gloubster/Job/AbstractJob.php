@@ -11,6 +11,8 @@
 
 namespace Gloubster\Job;
 
+use Gloubster\Exception\RuntimeException;
+
 abstract class AbstractJob implements JobInterface
 {
     private $beginning;
@@ -39,7 +41,7 @@ abstract class AbstractJob implements JobInterface
         }
 
         if ($throwException) {
-            throw new \RuntimeException(sprintf('Missing parameters : ', implode(', ', $missing)));
+            throw new RuntimeException(sprintf('Missing parameters : ', implode(', ', $missing)));
         }
 
         return count($missing) === 0;
@@ -148,7 +150,7 @@ abstract class AbstractJob implements JobInterface
         $data = unserialize($serialized);
 
         if (!is_array($data)) {
-            throw new \RuntimeException('Unable to unserialize data');
+            throw new RuntimeException('Unable to unserialize data');
         }
 
         foreach ($data as $key => $serializedValue) {
