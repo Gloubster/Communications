@@ -11,7 +11,9 @@
 
 namespace Gloubster\Job;
 
+use Gloubster\Exception\InvalidArgumentException;
 use Gloubster\Exception\RuntimeException;
+use Gloubster\Receipt\ReceiptInterface;
 
 abstract class AbstractJob implements JobInterface
 {
@@ -21,6 +23,7 @@ abstract class AbstractJob implements JobInterface
     private $processDuration;
     private $deliveryDuration;
     private $workerId;
+    private $receipts;
     protected $parameters;
     protected $delivery;
 
@@ -30,6 +33,9 @@ abstract class AbstractJob implements JobInterface
         $this->error = false;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isOk($throwException = false)
     {
         $missing = array();
@@ -47,16 +53,25 @@ abstract class AbstractJob implements JobInterface
         return count($missing) === 0;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDelivery()
     {
         return $this->delivery;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getParameters()
     {
         return $this->parameters;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setParameters(array $parameters)
     {
         $this->parameters = $parameters;
@@ -64,6 +79,9 @@ abstract class AbstractJob implements JobInterface
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setError($boolean)
     {
         $this->error = (Boolean) $boolean;
@@ -71,16 +89,25 @@ abstract class AbstractJob implements JobInterface
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function isOnError()
     {
         return $this->error;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getBeginning()
     {
         return $this->beginning;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setEnd($microtime)
     {
         $this->end = $microtime;
@@ -88,11 +115,17 @@ abstract class AbstractJob implements JobInterface
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getEnd()
     {
         return $this->end;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setProcessDuration($duration)
     {
         $this->processDuration = $duration;
@@ -100,11 +133,17 @@ abstract class AbstractJob implements JobInterface
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getProcessDuration()
     {
         return $this->processDuration;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setDeliveryDuration($duration)
     {
         $this->deliveryDuration = $duration;
@@ -112,11 +151,17 @@ abstract class AbstractJob implements JobInterface
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDeliveryDuration()
     {
         return $this->deliveryDuration;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setWorkerId($id)
     {
         $this->workerId = $id;
@@ -124,16 +169,25 @@ abstract class AbstractJob implements JobInterface
         return $this;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getWorkerId()
     {
         return $this->workerId;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function requireReceipt()
     {
         return false;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function serialize()
     {
         $data = array();
@@ -145,6 +199,9 @@ abstract class AbstractJob implements JobInterface
         return serialize($data);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function unserialize($serialized)
     {
         $data = unserialize($serialized);
@@ -156,6 +213,40 @@ abstract class AbstractJob implements JobInterface
         foreach ($data as $key => $serializedValue) {
             $this->{$key} = unserialize($serializedValue);
         }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setReceipts(array $receipts)
+    {
+        array_map(function($receipt) {
+            if (!$receipt instanceof ReceiptInterface) {
+                throw new InvalidArgumentException('setReceipts only accept ReceiptInterface');
+            }
+        }, $receipts);
+
+        $this->receipts = $receipts;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getReceipts()
+    {
+        return $this->receipts;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function pushReceipt(ReceiptInterface $receipt)
+    {
+        array_push($this->receipts, $receipt);
 
         return $this;
     }

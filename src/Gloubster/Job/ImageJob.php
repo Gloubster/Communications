@@ -33,21 +33,33 @@ class ImageJob extends AbstractJob
         $this->parameters = $parameters;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getMandatoryParameters()
     {
         return array('format');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSource()
     {
         return $this->source;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getRoutingKey()
     {
         return 'phrasea.subdefs.image';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getExchangeName()
     {
         return 'phrasea.subdefs.dispatcher';
