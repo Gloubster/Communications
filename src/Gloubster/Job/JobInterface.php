@@ -37,6 +37,21 @@ interface JobInterface extends \Serializable
     public function setError($boolean);
 
     /**
+     * Set processing error message.
+     *
+     * @param string $message
+     * @return JobInterface
+     */
+    public function setErrorMessage($message);
+
+    /**
+     * Returns the processing error message.
+     *
+     * @return string
+     */
+    public function getErrorMessage();
+
+    /**
      * Set an array of key/value parameters.
      *
      * @param array $parameters

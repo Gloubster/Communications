@@ -20,6 +20,7 @@ abstract class AbstractJob implements JobInterface
     private $beginning;
     private $end;
     private $error;
+    private $errorMessage;
     private $processDuration;
     private $deliveryDuration;
     private $workerId;
@@ -51,6 +52,24 @@ abstract class AbstractJob implements JobInterface
         }
 
         return count($missing) === 0;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setErrorMessage($message)
+    {
+        $this->errorMessage = $message;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getErrorMessage()
+    {
+        return $this->errorMessage;
     }
 
     /**

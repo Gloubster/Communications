@@ -29,6 +29,33 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Gloubster\Job\AbstractJob::setErrorMessage
+     * @covers Gloubster\Job\AbstractJob::getErrorMessage
+     */
+    public function testSetErrorMessage()
+    {
+        $data = 'Jean Rochefort';
+        $this->assertEquals('', $this->object->getErrorMessage());
+        $this->object->setErrorMessage($data);
+        $this->assertEquals($data, $this->object->getErrorMessage());
+    }
+
+    public function testSetReceipts()
+    {
+        $this->markTestSkipped('To implement');
+    }
+
+    public function testGetReceipts()
+    {
+        $this->markTestSkipped('To implement');
+    }
+
+    public function testPushReceipt()
+    {
+        $this->markTestSkipped('To implement');
+    }
+
+    /**
      * @covers Gloubster\Job\AbstractJob::getBeginning
      */
     public function testGetBeginning()
