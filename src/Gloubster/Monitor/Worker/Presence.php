@@ -23,6 +23,8 @@ class Presence implements MessageInterface
     public function setId($id)
     {
         $this->id = $id;
+
+        return $this;
     }
 
     public function getStartedTime()
@@ -33,6 +35,8 @@ class Presence implements MessageInterface
     public function setStartedTime($startedTime)
     {
         $this->startedTime = $startedTime;
+
+        return $this;
     }
 
     public function getLastJobTime()
@@ -43,6 +47,8 @@ class Presence implements MessageInterface
     public function setLastJobTime($lastJobTime)
     {
         $this->lastJobTime = $lastJobTime;
+
+        return $this;
     }
 
     public function getTotalJobs()
@@ -53,6 +59,8 @@ class Presence implements MessageInterface
     public function setTotalJobs($totalJobs)
     {
         $this->totalJobs = $totalJobs;
+
+        return $this;
     }
 
     public function getSuccessJobs()
@@ -63,6 +71,8 @@ class Presence implements MessageInterface
     public function setSuccessJobs($successJobs)
     {
         $this->successJobs = $successJobs;
+
+        return $this;
     }
 
     public function getReportTime()
@@ -73,6 +83,8 @@ class Presence implements MessageInterface
     public function setReportTime($reportTime)
     {
         $this->reportTime = $reportTime;
+
+        return $this;
     }
 
     public function isIdle()
@@ -83,6 +95,8 @@ class Presence implements MessageInterface
     public function setIdle($boolean)
     {
         $this->idle = $boolean;
+
+        return $this;
     }
 
     public function getFailureJobs()
@@ -93,6 +107,8 @@ class Presence implements MessageInterface
     public function setFailureJobs($failureJobs)
     {
         $this->failureJobs = $failureJobs;
+
+        return $this;
     }
 
     public function serialize()
