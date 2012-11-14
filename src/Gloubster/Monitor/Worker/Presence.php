@@ -2,7 +2,9 @@
 
 namespace Gloubster\Monitor\Worker;
 
-class Presence implements \Serializable
+use Gloubster\MessageInterface;
+
+class Presence implements MessageInterface
 {
     private $startedTime;
     private $id;

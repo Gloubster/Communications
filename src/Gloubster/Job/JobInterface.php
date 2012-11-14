@@ -11,11 +11,12 @@
 
 namespace Gloubster\Job;
 
+use Gloubster\MessageInterface;
 use Gloubster\Delivery\DeliveryInterface;
 use Gloubster\Exception\RuntimeException;
 use Gloubster\Receipt\ReceiptInterface;
 
-interface JobInterface extends \Serializable
+interface JobInterface extends MessageInterface
 {
 
     /**
