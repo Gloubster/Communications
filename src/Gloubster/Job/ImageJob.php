@@ -11,6 +11,8 @@
 
 namespace Gloubster\Job;
 
+use Gloubster\Exchange;
+use Gloubster\RoutingKey;
 use Gloubster\Delivery\DeliveryInterface;
 
 class ImageJob extends AbstractJob
@@ -54,7 +56,7 @@ class ImageJob extends AbstractJob
      */
     public function getRoutingKey()
     {
-        return 'phrasea.subdefs.image';
+        return RoutingKey::IMAGE_PROCESSING;
     }
 
     /**
@@ -62,6 +64,6 @@ class ImageJob extends AbstractJob
      */
     public function getExchangeName()
     {
-        return 'phrasea.subdefs.dispatcher';
+        return Exchange::GLOUBSTER_DISPATCHER;
     }
 }

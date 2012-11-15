@@ -11,6 +11,8 @@
 
 namespace Gloubster\Job;
 
+use Gloubster\Exchange;
+use Gloubster\RoutingKey;
 use Gloubster\Delivery\DeliveryInterface;
 
 class VideoJob extends AbstractJob
@@ -38,12 +40,12 @@ class VideoJob extends AbstractJob
 
     public function getRoutingKey()
     {
-        return 'phrasea.subdefs.video';
+        return RoutingKey::VIDEO_PROCESSING;
     }
 
     public function getExchangeName()
     {
-        return 'phrasea.subdefs.dispatcher';
+        return Exchange::GLOUBSTER_DISPATCHER;
     }
 
 }
