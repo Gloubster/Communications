@@ -6,14 +6,15 @@ use Gloubster\MessageInterface;
 
 class Presence implements MessageInterface
 {
-    private $startedTime;
+    private $failureJobs;
     private $id;
     private $idle;
     private $lastJobTime;
-    private $totalJobs;
-    private $successJobs;
-    private $failureJobs;
+    private $memory;
     private $reportTime;
+    private $startedTime;
+    private $successJobs;
+    private $totalJobs;
 
     public function getId()
     {
@@ -25,6 +26,16 @@ class Presence implements MessageInterface
         $this->id = $id;
 
         return $this;
+    }
+
+    public function getMemory()
+    {
+        return $this->memory;
+    }
+
+    public function setMemory($memory)
+    {
+        $this->memory = $memory;
     }
 
     public function getStartedTime()
