@@ -36,6 +36,8 @@ class Presence implements MessageInterface
     public function setMemory($memory)
     {
         $this->memory = $memory;
+
+        return $this;
     }
 
     public function getStartedTime()
