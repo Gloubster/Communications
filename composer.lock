@@ -1,5 +1,5 @@
 {
-    "hash": "fed2aa2f49bd3e7a9141d73baf2d3e46",
+    "hash": "03f27c931c993129718dfda0acd0bb6f",
     "packages": [
         {
             "name": "justinrainbow/json-schema",
@@ -112,18 +112,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Finder",
-                "reference": "c626c9eeb220a2c3ddd9b597c896d2e7675b42a1"
+                "reference": "9e54a0dff72fdc422e0f3cb74d1a4d45c1d4b1b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/Finder/archive/c626c9eeb220a2c3ddd9b597c896d2e7675b42a1.zip",
-                "reference": "c626c9eeb220a2c3ddd9b597c896d2e7675b42a1",
+                "url": "https://github.com/symfony/Finder/archive/9e54a0dff72fdc422e0f3cb74d1a4d45c1d4b1b7.zip",
+                "reference": "9e54a0dff72fdc422e0f3cb74d1a4d45c1d4b1b7",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "1352815684",
+            "time": "1353329932",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -151,13 +151,51 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "http://symfony.com"
+        },
+        {
+            "name": "videlalvaro/php-amqplib",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/videlalvaro/php-amqplib.git",
+                "reference": "237870120238f37d66703583ca0e186b4567b1a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/videlalvaro/php-amqplib/archive/237870120238f37d66703583ca0e186b4567b1a9.zip",
+                "reference": "237870120238f37d66703583ca0e186b4567b1a9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "time": "1351776374",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "PhpAmqpLib": ""
+                }
+            },
+            "authors": [
+                {
+                    "name": "Alvaro Videla"
+                }
+            ],
+            "description": "This library is a pure PHP implementation of the AMQP protocol. It's been tested against RabbitMQ.",
+            "homepage": "https://github.com/videlalvaro/php-amqplib/",
+            "keywords": [
+                "queue",
+                "rabbitmq",
+                "message"
+            ]
         }
     ],
     "aliases": [
 
     ],
     "minimum-stability": "dev",
-    "stability-flags": [
-
-    ]
+    "stability-flags": {
+        "videlalvaro/php-amqplib": 20
+    }
 }

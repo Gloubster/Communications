@@ -11,6 +11,7 @@
         "justinrainbow/json-schema": "*"
     },
     "require-dev": {
+        "videlalvaro/php-amqplib": "dev-master",
         "symfony/finder": ">=2.0,<=2.2.x-dev",
         "symfony/filesystem": ">=2.0,<=2.2.x-dev"
     },
