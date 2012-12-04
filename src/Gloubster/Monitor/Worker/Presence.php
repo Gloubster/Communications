@@ -15,6 +15,7 @@ class Presence implements MessageInterface
     private $startedTime;
     private $successJobs;
     private $totalJobs;
+    private $workerType;
 
     public function getId()
     {
@@ -120,6 +121,18 @@ class Presence implements MessageInterface
     public function setFailureJobs($failureJobs)
     {
         $this->failureJobs = $failureJobs;
+
+        return $this;
+    }
+
+    public function getWorkerType()
+    {
+        return $this->workerType;
+    }
+
+    public function setWorkerType($workerType)
+    {
+        $this->workerType = $workerType;
 
         return $this;
     }
