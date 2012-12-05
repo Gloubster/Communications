@@ -137,6 +137,17 @@ class Presence implements MessageInterface
         return $this;
     }
 
+    public function toJSON()
+    {
+        $data = array();
+
+        foreach($this as $key => $value) {
+            $data[$key] = $value;
+        }
+
+        return json_encode((object) $data);
+    }
+
     public function serialize()
     {
         $data = array();
