@@ -29,6 +29,7 @@ interface DeliveryInterface extends \Serializable
      * This method can not be used before on of the delivery* methods
      *
      * @return string
+     *
      * @throws LogicException In case the delivery did not happen yet
      */
     public function getId();
@@ -37,6 +38,7 @@ interface DeliveryInterface extends \Serializable
      * Delivers a content based on a binary data
      *
      * @param string $data Binary data
+     *
      * @return mixed A unique id to fetch the data back
      */
     public function deliverBinary($data);
@@ -45,6 +47,7 @@ interface DeliveryInterface extends \Serializable
      * Delivers a content based on a path-file
      *
      * @param string $pathfile the path to the file
+     *
      * @return mixed A unique id to fetch the data back
      */
     public function deliverFile($pathfile);
@@ -53,6 +56,9 @@ interface DeliveryInterface extends \Serializable
      * Fetch data given an unique Id
      *
      * @param string $id
+     *
+     * @return string A binary string of the data
+     *
      * @throws InvalidArgumentException In case the id does not exists
      */
     public function fetch($id);
