@@ -40,6 +40,7 @@ abstract class AbstractDeliveryTest extends \PHPUnit_Framework_TestCase
     public function testGetIdAfterDeliverFile()
     {
         $file = tempnam(sys_get_temp_dir(), 'testfile');
+        file_put_contents($file, 'Jean-Rochefort');
         $delivery = $this->getDelivery();
         $expectedId = $delivery->deliverFile($file);
         $this->assertTrue(is_scalar($delivery->getId()));
