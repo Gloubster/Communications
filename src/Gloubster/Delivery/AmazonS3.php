@@ -54,6 +54,15 @@ class AmazonS3 implements DeliveryInterface
      */
     private $delivered;
 
+    /**
+     * Constructor, will create a S3Client based on the given options
+     *
+     * @param $bucketName The bucket name
+     * @param $objectKey The object key
+     * @param array $options An array of S3Client options
+     * @param string $acl A CannedAcl::* value
+     * @param integer $uploadChunk The maximum size of a upload chunk
+     */
     public function __construct($bucketName, $objectKey, array $options, $acl = CannedAcl::PRIVATE_ACCESS, $uploadChunk = 10)
     {
         $this->acl                       = $acl;
@@ -71,11 +80,17 @@ class AmazonS3 implements DeliveryInterface
         $this->initClient();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'amazon-s3';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getId()
     {
         if (! $this->delivered) {
@@ -85,6 +100,9 @@ class AmazonS3 implements DeliveryInterface
         return sprintf('https://%s.s3.amazonaws.com/%s', $this->bucketName, $this->objectKey);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function deliverBinary($data)
     {
         try {
@@ -104,6 +122,9 @@ class AmazonS3 implements DeliveryInterface
         return $this->getId();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function deliverFile($pathfile)
     {
         $uploader = UploadBuilder::newInstance()
@@ -129,6 +150,9 @@ class AmazonS3 implements DeliveryInterface
         return $this->getId();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function fetch($id)
     {
         try {
@@ -146,6 +170,9 @@ class AmazonS3 implements DeliveryInterface
         return $result['Body'];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function serialize()
     {
         $data = array();
@@ -160,6 +187,9 @@ class AmazonS3 implements DeliveryInterface
         return json_encode((object) $data);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function unserialize($serialized)
     {
         $data = json_decode($serialized, true);
@@ -177,16 +207,35 @@ class AmazonS3 implements DeliveryInterface
         return $this;
     }
 
+    /**
+     * Inject a S3Client, for unit tests puprose
+     *
+     * @param S3Client $client
+     *
+     * @return AmazonS3
+     */
     public function setClient(S3Client $client)
     {
         $this->client = $client;
+
+        return $this;
     }
 
+    /**
+     * Return the current S3Client, for unit tests purpose
+     *
+     * @return S3Client
+     */
     public function getClient()
     {
         return $this->client;
     }
 
+    /**
+     * Initialize the S3Client internally, base on the options
+     *
+     * @throws RuntimeException
+     */
     private function initClient()
     {
         try {
