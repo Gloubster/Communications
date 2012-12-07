@@ -8,6 +8,7 @@
         }
     ],
     "require": {
+        "aws/aws-sdk-php": "dev-master",
         "justinrainbow/json-schema": "*",
         "videlalvaro/php-amqplib": "dev-master"
     },

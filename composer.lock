@@ -1,24 +1,165 @@
 {
-    "hash": "d50c434bb4a84439f0cd242b62e4d885",
+    "hash": "c56552cefcd8f7b9ab3b9021a70d2d7f",
     "packages": [
+        {
+            "name": "aws/aws-sdk-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aws/aws-sdk-php",
+                "reference": "df39fe465f7e5cffa272e2f18188e3ba73d67988"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/aws/aws-sdk-php/archive/df39fe465f7e5cffa272e2f18188e3ba73d67988.zip",
+                "reference": "df39fe465f7e5cffa272e2f18188e3ba73d67988",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "guzzle/guzzle": "3.0.*"
+            },
+            "require-dev": {
+                "symfony/class-loader": "2.*",
+                "doctrine/common": "2.3.*",
+                "monolog/monolog": "1.2.*",
+                "ext-apc": "*",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "time": "2012-12-07 00:37:35",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Aws": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Amazon Web Services",
+                    "homepage": "http://aws.amazon.com"
+                }
+            ],
+            "description": "AWS SDK for PHP",
+            "homepage": "http://aws.amazon.com/sdkforphp2",
+            "keywords": [
+                "amazon",
+                "s3",
+                "sdk",
+                "aws",
+                "dynamodb",
+                "ec2"
+            ]
+        },
+        {
+            "name": "guzzle/guzzle",
+            "version": "v3.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle",
+                "reference": "v3.0.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/guzzle/guzzle/archive/v3.0.5.zip",
+                "reference": "v3.0.5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "ext-curl": "*",
+                "symfony/event-dispatcher": "2.1.*"
+            },
+            "replace": {
+                "guzzle/batch": "self.version",
+                "guzzle/cache": "self.version",
+                "guzzle/common": "self.version",
+                "guzzle/http": "self.version",
+                "guzzle/inflection": "self.version",
+                "guzzle/iterator": "self.version",
+                "guzzle/log": "self.version",
+                "guzzle/parser": "self.version",
+                "guzzle/plugin": "self.version",
+                "guzzle/plugin-async": "self.version",
+                "guzzle/plugin-backoff": "self.version",
+                "guzzle/plugin-cache": "self.version",
+                "guzzle/plugin-cookie": "self.version",
+                "guzzle/plugin-curlauth": "self.version",
+                "guzzle/plugin-history": "self.version",
+                "guzzle/plugin-log": "self.version",
+                "guzzle/plugin-md5": "self.version",
+                "guzzle/plugin-mock": "self.version",
+                "guzzle/plugin-oauth": "self.version",
+                "guzzle/service": "self.version",
+                "guzzle/stream": "self.version"
+            },
+            "require-dev": {
+                "doctrine/common": "*",
+                "symfony/class-loader": "*",
+                "monolog/monolog": "1.*",
+                "zendframework/zend-cache": "2.0.*",
+                "zendframework/zend-log": "2.0.*",
+                "zend/zend-log1": "1.12",
+                "zend/zend-cache1": "1.12",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "time": "2012-11-19 00:15:33",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Guzzle\\Tests": "tests/",
+                    "Guzzle": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Guzzle Community",
+                    "homepage": "https://github.com/guzzle/guzzle/contributors"
+                }
+            ],
+            "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "framework",
+                "curl",
+                "http",
+                "rest",
+                "http client",
+                "client",
+                "web service"
+            ]
+        },
         {
             "name": "justinrainbow/json-schema",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "git://github.com/justinrainbow/json-schema.git",
-                "reference": "6573b23bed508c6744a61ffbe196a73a327761b7"
+                "reference": "1.2.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/justinrainbow/json-schema/archive/6573b23bed508c6744a61ffbe196a73a327761b7.zip",
-                "reference": "6573b23bed508c6744a61ffbe196a73a327761b7",
+                "url": "https://github.com/justinrainbow/json-schema/archive/1.2.2.zip",
+                "reference": "1.2.2",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "1351872170",
+            "time": "2012-11-29 16:11:18",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -57,23 +198,72 @@
             ]
         },
         {
+            "name": "symfony/event-dispatcher",
+            "version": "2.1.x-dev",
+            "target-dir": "Symfony/Component/EventDispatcher",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/EventDispatcher",
+                "reference": "df9bde91f8f6fa7fb40996edf30e632cfc606b4a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/symfony/EventDispatcher/archive/df9bde91f8f6fa7fb40996edf30e632cfc606b4a.zip",
+                "reference": "df9bde91f8f6fa7fb40996edf30e632cfc606b4a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "symfony/dependency-injection": "2.1.*"
+            },
+            "suggest": {
+                "symfony/dependency-injection": "2.1.*",
+                "symfony/http-kernel": "2.1.*"
+            },
+            "time": "2012-12-06 10:00:55",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\EventDispatcher": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony EventDispatcher Component",
+            "homepage": "http://symfony.com"
+        },
+        {
             "name": "videlalvaro/php-amqplib",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "git://github.com/videlalvaro/php-amqplib.git",
-                "reference": "237870120238f37d66703583ca0e186b4567b1a9"
+                "reference": "6ce5a028496a5c68371bd571d47467c583d17154"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/videlalvaro/php-amqplib/archive/237870120238f37d66703583ca0e186b4567b1a9.zip",
-                "reference": "237870120238f37d66703583ca0e186b4567b1a9",
+                "url": "https://github.com/videlalvaro/php-amqplib/archive/6ce5a028496a5c68371bd571d47467c583d17154.zip",
+                "reference": "6ce5a028496a5c68371bd571d47467c583d17154",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "1351776374",
+            "time": "2012-12-04 15:08:38",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -103,18 +293,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Filesystem",
-                "reference": "62dca321dfd5490cfa10d0086cf464c69eb53f82"
+                "reference": "23e5f803eeb98fd57ab8d8fa1209082041d9d1ab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/Filesystem/archive/62dca321dfd5490cfa10d0086cf464c69eb53f82.zip",
-                "reference": "62dca321dfd5490cfa10d0086cf464c69eb53f82",
+                "url": "https://github.com/symfony/Filesystem/archive/23e5f803eeb98fd57ab8d8fa1209082041d9d1ab.zip",
+                "reference": "23e5f803eeb98fd57ab8d8fa1209082041d9d1ab",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "1352815684",
+            "time": "2012-11-29 10:32:45",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -161,7 +351,7 @@
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "1353329932",
+            "time": "2012-11-19 12:58:52",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -196,6 +386,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "aws/aws-sdk-php": 20,
         "videlalvaro/php-amqplib": 20
     }
 }
