@@ -12,6 +12,7 @@
 namespace Gloubster\Message\Job;
 
 use Gloubster\RabbitMQ\Configuration as RabbitMQConfiguration;
+use Gloubster\Exception\RuntimeException;
 
 class ImageJob extends AbstractJob
 {
@@ -63,5 +64,18 @@ class ImageJob extends AbstractJob
     public function getExchangeName()
     {
         return RabbitMQConfiguration::EXCHANGE_DISPATCHER;
+    }
+
+    public function isOk($throwException = false)
+    {
+        if (null === $this->source) {
+            if ($throwException) {
+                throw new RuntimeException('No source set for this Job');
+            }
+
+            return false;
+        }
+
+        return parent::isOk($throwException);
     }
 }

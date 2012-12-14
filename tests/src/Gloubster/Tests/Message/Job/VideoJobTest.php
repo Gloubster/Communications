@@ -20,6 +20,27 @@ class VideoJobTest extends AbstractJobTest
             ->setDelivery(Filesystem::create(__DIR__ . '/../../../../target.jpg'));
     }
 
+    public function getWrongJobs()
+    {
+        $delivery = $this->getMockBuilder('Gloubster\\Delivery\\DeliveryInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $job1 = new VideoJob();
+
+        $job2 = new VideoJob();
+        $job2->setSource('/pathToSource');
+
+        $job3 = new VideoJob();
+        $job3->setDelivery($delivery);
+
+        return array(
+            array($job1),
+            array($job2),
+            array($job3),
+        );
+    }
+
     /**
      * @covers Gloubster\Message\Job\VideoJob::isOk
      */

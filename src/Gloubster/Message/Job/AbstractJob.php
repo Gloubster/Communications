@@ -41,6 +41,14 @@ abstract class AbstractJob extends AbstractMessage implements JobInterface
      */
     public function isOk($throwException = false)
     {
+        if (null === $this->delivery) {
+            if ($throwException) {
+                throw new RuntimeException('No delivery set for this Job');
+            }
+
+            return false;
+        }
+
         $missing = array();
 
         foreach ($this->getMandatoryParameters() as $parameter) {

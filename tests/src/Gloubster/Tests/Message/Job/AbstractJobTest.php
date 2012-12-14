@@ -42,19 +42,57 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($data, $this->object->getErrorMessage());
     }
 
+    /**
+     * @covers Gloubster\Message\Job\AbstractJob::setReceipts
+     * @covers Gloubster\Message\Job\AbstractJob::getReceipts
+     */
     public function testSetReceipts()
     {
-        $this->markTestSkipped('To implement');
+        $receipt = $this->getMockBuilder('Gloubster\\Receipt\\ReceiptInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $receipts = array($receipt);
+        $this->object->setReceipts($receipts);
+        $this->assertEquals($receipts, $this->object->getReceipts());
+
+        $receipts = array();
+        $this->object->setReceipts($receipts);
+        $this->assertEquals($receipts, $this->object->getReceipts());
     }
 
-    public function testGetReceipts()
+    /**
+     * @covers Gloubster\Message\Job\AbstractJob::setReceipts
+     * @expectedException Gloubster\Exception\InvalidArgumentException
+     */
+    public function testSetWrongReceipts()
     {
-        $this->markTestSkipped('To implement');
+        $delivery = $this->getMockBuilder('Gloubster\\Delivery\\DeliveryInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $receipts = array($delivery);
+        $this->object->setReceipts($receipts);
     }
 
+    /**
+     * @covers Gloubster\Message\Job\AbstractJob::pushReceipt
+     * @covers Gloubster\Message\Job\AbstractJob::getReceipts
+     */
     public function testPushReceipt()
     {
-        $this->markTestSkipped('To implement');
+        $this->object->setReceipts(array());
+        $this->assertCount(0, $this->object->getReceipts());
+
+        $receipt = $this->getMockBuilder('Gloubster\\Receipt\\ReceiptInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->object->pushReceipt($receipt);
+        $this->assertEquals(array($receipt), $this->object->getReceipts());
+
+        $this->object->pushReceipt($receipt);
+        $this->assertEquals(array($receipt, $receipt), $this->object->getReceipts());
     }
 
     /**
@@ -186,6 +224,36 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     public function testIsOk()
     {
         $this->assertInternalType('boolean', $this->object->isOk());
+        $this->assertTrue($this->object->isOk());
+    }
+
+    /**
+     * @covers Gloubster\Message\Job\AbstractJob::isOk
+     */
+    public function testIsOkWithException()
+    {
+        $this->assertInternalType('boolean', $this->object->isOk());
+        $this->assertTrue($this->object->isOk(true));
+    }
+
+    /**
+     * @dataProvider getWrongJobs
+     * @covers Gloubster\Message\Job\AbstractJob::isOk
+     */
+    public function testIsNotOk($object)
+    {
+        $this->assertInternalType('boolean', $object->isOk());
+        $this->assertFalse($object->isOk());
+    }
+
+    /**
+     * @dataProvider getWrongJobs
+     * @expectedException Gloubster\Exception\RuntimeException
+     * @covers Gloubster\Message\Job\AbstractJob::isOk
+     */
+    public function testIsNotOkWithException($object)
+    {
+        $object->isOk(true);
     }
 
     /**
