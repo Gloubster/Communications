@@ -5,16 +5,16 @@ namespace Gloubster\Tests\Delivery;
 use Gloubster\Delivery\Filesystem;
 
 /**
- * @covers Gloubster\Delivery\FileSystem
+ * @covers Gloubster\Delivery\Filesystem
  */
-class FileSystemTest extends AbstractDeliveryTest
+class FilesystemTest extends AbstractDeliveryTest
 {
     protected $target;
 
     public function getDelivery()
     {
         $this->target = tempnam(sys_get_temp_dir(), 'test_filesystem_delivery');
-        return FileSystem::create($this->target);
+        return Filesystem::create($this->target);
     }
 
     protected function tearDown()

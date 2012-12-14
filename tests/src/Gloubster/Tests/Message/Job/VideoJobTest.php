@@ -3,7 +3,7 @@
 namespace Gloubster\Tests\Message\Job;
 
 use Gloubster\Message\Job\VideoJob;
-use Gloubster\Delivery\FileSystem;
+use Gloubster\Delivery\Filesystem;
 
 /**
  * @covers Gloubster\Message\Job\AbstractJob
@@ -17,7 +17,7 @@ class VideoJobTest extends AbstractJobTest
         $job = new VideoJob();
 
         return $job->setSource(__DIR__ . '/../../../../testfiles/photo02.JPG')
-            ->setDelivery(new FileSystem(__DIR__ . '/../../../../target.jpg'));
+            ->setDelivery(Filesystem::create(__DIR__ . '/../../../../target.jpg'));
     }
 
     /**
