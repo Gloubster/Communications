@@ -56,4 +56,14 @@ class VideoJobTest extends AbstractJobTest
     {
         $this->assertTrue(file_exists($this->object->getSource()));
     }
+
+    public function testCreateJob()
+    {
+        $delivery = $this->getMockBuilder('Gloubster\\Delivery\\DeliveryInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $job = VideoJob::create('/path/to/source', $delivery);
+        $this->assertTrue($job->isOk());
+    }
 }

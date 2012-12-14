@@ -20,6 +20,11 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     abstract public function getJob();
 
     /**
+     * @covers Gloubster\Message\Job\AbstractJob::create
+     */
+    abstract public function testCreateJob();
+
+    /**
      * @covers Gloubster\Message\Job\AbstractJob::setError
      * @covers Gloubster\Message\Job\AbstractJob::isOnError
      */

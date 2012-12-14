@@ -23,8 +23,6 @@ class ImageJob extends AbstractJob
     const RESIZE_OUTBOUND = 'out';
     const RESIZE_INBOUND_FIXEDRATIO = 'in_fixed';
 
-    protected $source;
-
     public function getName()
     {
         return 'image';
@@ -36,18 +34,6 @@ class ImageJob extends AbstractJob
     public function getMandatoryParameters()
     {
         return array('format');
-    }
-
-    public function getSource()
-    {
-        return $this->source;
-    }
-
-    public function setSource($source)
-    {
-        $this->source = $source;
-
-        return $this;
     }
 
     /**
@@ -64,18 +50,5 @@ class ImageJob extends AbstractJob
     public function getExchangeName()
     {
         return RabbitMQConfiguration::EXCHANGE_DISPATCHER;
-    }
-
-    public function isOk($throwException = false)
-    {
-        if (null === $this->source) {
-            if ($throwException) {
-                throw new RuntimeException('No source set for this Job');
-            }
-
-            return false;
-        }
-
-        return parent::isOk($throwException);
     }
 }

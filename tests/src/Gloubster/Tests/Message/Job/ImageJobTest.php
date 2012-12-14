@@ -74,4 +74,14 @@ class ImageJobTest extends AbstractJobTest
     {
         $this->assertTrue(file_exists($this->getJob()->getSource()));
     }
+
+    public function testCreateJob()
+    {
+        $delivery = $this->getMockBuilder('Gloubster\\Delivery\\DeliveryInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $job = ImageJob::create('/path/to/source', $delivery, array('format' => 'bingo'));
+        $this->assertTrue($job->isOk());
+    }
 }

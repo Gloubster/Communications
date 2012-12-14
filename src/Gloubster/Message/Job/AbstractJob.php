@@ -27,6 +27,7 @@ abstract class AbstractJob extends AbstractMessage implements JobInterface
     private $deliveryDuration;
     private $workerId;
     private $receipts = array();
+    private $source;
     protected $parameters = array();
     protected $delivery;
 
@@ -36,11 +37,31 @@ abstract class AbstractJob extends AbstractMessage implements JobInterface
         $this->error     = false;
     }
 
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    public function setSource($source)
+    {
+        $this->source = $source;
+
+        return $this;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function isOk($throwException = false)
     {
+        if (null === $this->source) {
+            if ($throwException) {
+                throw new RuntimeException('No source set for this Job');
+            }
+
+            return false;
+        }
+
         if (null === $this->delivery) {
             if ($throwException) {
                 throw new RuntimeException('No delivery set for this Job');
@@ -261,6 +282,15 @@ abstract class AbstractJob extends AbstractMessage implements JobInterface
         array_push($this->receipts, $receipt);
 
         return $this;
+    }
+
+    public static function create($source, DeliveryInterface $delivery, array $parameters = array())
+    {
+        $job = new static();
+
+        return $job->setSource($source)
+            ->setDelivery($delivery)
+            ->setParameters($parameters);
     }
 
     /**
