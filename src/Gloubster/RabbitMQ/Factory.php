@@ -1,15 +1,14 @@
 <?php
 
-namespace Gloubster;
+namespace Gloubster\RabbitMQ;
 
-use Gloubster\Configuration;
+use Gloubster\Configuration as MainConfiguration;
 use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Connection\AMQPSSLConnection;
 
-class RabbitMQFactory
+class Factory
 {
-
-    public static function createConnection(Configuration $conf)
+    public static function createAMQPLibConnection(MainConfiguration $conf)
     {
         if (isset($conf['server']['ssl']) && isset($conf['server']['ssl']['enable']) && true === $conf['server']['ssl']['enable']) {
             $connection = new AMQPSSLConnection(
