@@ -13,5 +13,4 @@ namespace Gloubster\Exception;
 
 interface ExceptionInterface
 {
-
 }

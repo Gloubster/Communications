@@ -13,5 +13,4 @@ namespace Gloubster\Exception;
 
 class RuntimeException extends \RuntimeException implements ExceptionInterface
 {
-
 }
