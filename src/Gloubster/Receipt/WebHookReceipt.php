@@ -141,8 +141,8 @@ class WebHookReceipt implements ReceiptInterface
         $hook = new WebHookReceipt();
 
         return $hook->setUrl($url)
-            ->setParameter($parameter)
-            ->setUseBody($useBody);
+                ->setParameter($parameter)
+                ->setUseBody($useBody);
     }
 
     /**

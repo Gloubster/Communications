@@ -21,7 +21,6 @@ use Gloubster\Exception\RuntimeException;
  * with the schema.
  *
  * The configuration object provides an ArrayAccess interface.
- *
  */
 class Configuration implements \ArrayAccess
 {
@@ -29,6 +28,14 @@ class Configuration implements \ArrayAccess
     protected $validator;
     protected $configuration;
 
+    /**
+     * Constructor
+     *
+     * @param string $json The configuration to be loaded
+     * @param array $extra_schemas An array of extra schema for json validation
+     *
+     * @throws RuntimeException In case the provided Json does not match schema(s)
+     */
     public function __construct($json, array $extra_schemas = array())
     {
         $schemaFile = __DIR__ . '/../../resources/configuration.schema.json';
@@ -37,7 +44,7 @@ class Configuration implements \ArrayAccess
         foreach ($schemas as $schema) {
             $jsonSchema = json_decode($schema);
 
-            if ( ! $jsonSchema) {
+            if (!$jsonSchema) {
                 throw new RuntimeException('Invalid configuration schema');
             }
 
@@ -51,7 +58,7 @@ class Configuration implements \ArrayAccess
         foreach ($this->schemas as $schema) {
             $this->validator->check($configuration, $schema);
 
-            if ( ! $this->validator->isValid()) {
+            if (!$this->validator->isValid()) {
                 foreach ($this->validator->getErrors() as $error) {
                     $errors[] = sprintf("[%s] %s\n", $error['property'], $error['message']);
                 }
@@ -65,21 +72,33 @@ class Configuration implements \ArrayAccess
         $this->configuration = json_decode($json, true);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetExists($offset)
     {
         return isset($this->configuration[$offset]);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetGet($offset)
     {
         return $this->configuration[$offset];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetSet($offset, $value)
     {
         $this->configuration[$offset] = $value;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function offsetUnset($offset)
     {
         unset($this->configuration[$offset]);
