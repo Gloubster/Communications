@@ -1,6 +1,8 @@
 <?php
 
-namespace Gloubster;
+namespace Gloubster\Tests;
+
+use Gloubster\Configuration;
 
 class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {
@@ -39,12 +41,12 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
     public function getGoodConfigurations()
     {
-        return $this->loadConfigurationsFolder(__DIR__ . '/../../resources/good-configurations');
+        return $this->loadConfigurationsFolder(__DIR__ . '/../../../resources/good-configurations');
     }
 
     public function getWrongConfigurations()
     {
-        return $this->loadConfigurationsFolder(__DIR__ . '/../../resources/wrong-configurations');
+        return $this->loadConfigurationsFolder(__DIR__ . '/../../../resources/wrong-configurations');
     }
 
     protected function loadConfigurationsFolder($folder)

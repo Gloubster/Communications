@@ -14,7 +14,7 @@ namespace Gloubster\Delivery;
 use Gloubster\Exception\InvalidArgumentException;
 use Gloubster\Exception\LogicException;
 
-interface DeliveryInterface extends \Serializable
+interface DeliveryInterface
 {
 
     /**
@@ -62,4 +62,7 @@ interface DeliveryInterface extends \Serializable
      * @throws InvalidArgumentException In case the id does not exists
      */
     public function fetch($id);
+
+    public function toArray();
+    public static function fromArray(array $data);
 }

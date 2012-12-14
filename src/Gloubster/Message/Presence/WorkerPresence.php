@@ -1,10 +1,11 @@
 <?php
 
-namespace Gloubster\Monitor\Worker;
+namespace Gloubster\Message\Presence;
 
-use Gloubster\MessageInterface;
+use Gloubster\Message\AbstractMessage;
+use Gloubster\Message\MessageInterface;
 
-class Presence implements MessageInterface
+class WorkerPresence extends AbstractMessage implements MessageInterface, PresenceInterface
 {
     private $failureJobs;
     private $id;
@@ -16,6 +17,11 @@ class Presence implements MessageInterface
     private $successJobs;
     private $totalJobs;
     private $workerType;
+
+    public function getName()
+    {
+        return 'presence';
+    }
 
     public function getId()
     {
@@ -43,24 +49,24 @@ class Presence implements MessageInterface
 
     public function getStartedTime()
     {
-        return $this->startedTime;
+        return (double) $this->startedTime;
     }
 
     public function setStartedTime($startedTime)
     {
-        $this->startedTime = $startedTime;
+        $this->startedTime = null !== $startedTime ? (string) $startedTime : null;
 
         return $this;
     }
 
     public function getLastJobTime()
     {
-        return $this->lastJobTime;
+        return (float) $this->lastJobTime;
     }
 
     public function setLastJobTime($lastJobTime)
     {
-        $this->lastJobTime = $lastJobTime;
+        $this->lastJobTime = null !== $lastJobTime ? (string) $lastJobTime : null;
 
         return $this;
     }
@@ -91,12 +97,12 @@ class Presence implements MessageInterface
 
     public function getReportTime()
     {
-        return $this->reportTime;
+        return (float) $this->reportTime;
     }
 
     public function setReportTime($reportTime)
     {
-        $this->reportTime = $reportTime;
+        $this->reportTime = null !== $reportTime ? (string) $reportTime : null;
 
         return $this;
     }
@@ -137,40 +143,14 @@ class Presence implements MessageInterface
         return $this;
     }
 
-    public function toJSON()
+    protected function getArrayData()
     {
         $data = array();
 
-        foreach($this as $key => $value) {
+        foreach ($this as $key => $value) {
             $data[$key] = $value;
         }
 
-        return json_encode((object) $data);
-    }
-
-    public function serialize()
-    {
-        $data = array();
-
-        foreach ($this as $key => $parameter) {
-            $data[$key] = serialize($parameter);
-        }
-
-        return serialize($data);
-    }
-
-    public function unserialize($serialized)
-    {
-        $data = unserialize($serialized);
-
-        if (!is_array($data)) {
-            throw new RuntimeException('Unable to unserialize data');
-        }
-
-        foreach ($data as $key => $serializedValue) {
-            $this->{$key} = unserialize($serializedValue);
-        }
-
-        return $this;
+        return $data;
     }
 }

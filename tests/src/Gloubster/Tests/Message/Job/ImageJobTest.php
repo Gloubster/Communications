@@ -1,23 +1,27 @@
 <?php
 
-namespace Gloubster\Job;
+namespace Gloubster\Tests\Message\Job;
 
+use Gloubster\Message\Job\ImageJob;
 use Gloubster\Delivery\FileSystem;
 
 /**
- * @covers Gloubster\Job\AbstractJob
- * @covers Gloubster\Job\ImageJob
+ * @covers Gloubster\Message\Job\AbstractJob
+ * @covers Gloubster\Message\Job\ImageJob
  */
 class ImageJobTest extends AbstractJobTest
 {
 
     public function getJob()
     {
-        return new ImageJob(__DIR__ . '/../../testfiles/photo02.JPG', new FileSystem(__DIR__ . '/../../target.jpg'));
+        $job = new ImageJob();
+
+        return $job->setSource(__DIR__ . '/../../../../testfiles/photo02.JPG')
+            ->setDelivery(new FileSystem(__DIR__ . '/../../../../target.jpg'));
     }
 
     /**
-     * @covers Gloubster\Job\ImageJob::isOk
+     * @covers Gloubster\Message\Job\ImageJob::isOk
      */
     public function testIsImageJobOk()
     {
@@ -28,7 +32,7 @@ class ImageJobTest extends AbstractJobTest
     }
 
     /**
-     * @covers Gloubster\Job\ImageJob::isOk
+     * @covers Gloubster\Message\Job\ImageJob::isOk
      * @expectedException Gloubster\Exception\RuntimeException
      */
     public function testIsImageJobNotOkWithException()
@@ -37,7 +41,7 @@ class ImageJobTest extends AbstractJobTest
     }
 
     /**
-     * @covers Gloubster\Job\ImageJob::isOk
+     * @covers Gloubster\Message\Job\ImageJob::isOk
      */
     public function testIsImageJobOkWithException()
     {
@@ -47,7 +51,7 @@ class ImageJobTest extends AbstractJobTest
     }
 
     /**
-     * @covers Gloubster\Job\ImageJob::getSource
+     * @covers Gloubster\Message\Job\ImageJob::getSource
      */
     public function testGetSource()
     {

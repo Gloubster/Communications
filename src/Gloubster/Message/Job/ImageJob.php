@@ -9,11 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace Gloubster\Job;
+namespace Gloubster\Message\Job;
 
 use Gloubster\Exchange;
 use Gloubster\RoutingKey;
-use Gloubster\Delivery\DeliveryInterface;
 
 class ImageJob extends AbstractJob
 {
@@ -26,13 +25,9 @@ class ImageJob extends AbstractJob
 
     protected $source;
 
-    public function __construct($source, DeliveryInterface $delivery, array $parameters = array())
+    public function getName()
     {
-        parent::__construct();
-
-        $this->source = $source;
-        $this->delivery = $delivery;
-        $this->parameters = $parameters;
+        return 'image';
     }
 
     /**
@@ -43,12 +38,16 @@ class ImageJob extends AbstractJob
         return array('format');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSource()
     {
         return $this->source;
+    }
+
+    public function setSource($source)
+    {
+        $this->source = $source;
+
+        return $this;
     }
 
     /**

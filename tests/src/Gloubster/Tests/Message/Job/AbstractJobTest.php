@@ -1,6 +1,8 @@
 <?php
 
-namespace Gloubster\Job;
+namespace Gloubster\Tests\Message\Job;
+
+use Gloubster\Message\Job\Factory;
 
 abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,8 +20,8 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     abstract public function getJob();
 
     /**
-     * @covers Gloubster\Job\AbstractJob::setError
-     * @covers Gloubster\Job\AbstractJob::isOnError
+     * @covers Gloubster\Message\Job\AbstractJob::setError
+     * @covers Gloubster\Message\Job\AbstractJob::isOnError
      */
     public function testSetError()
     {
@@ -29,8 +31,8 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Job\AbstractJob::setErrorMessage
-     * @covers Gloubster\Job\AbstractJob::getErrorMessage
+     * @covers Gloubster\Message\Job\AbstractJob::setErrorMessage
+     * @covers Gloubster\Message\Job\AbstractJob::getErrorMessage
      */
     public function testSetErrorMessage()
     {
@@ -56,7 +58,7 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Job\AbstractJob::getBeginning
+     * @covers Gloubster\Message\Job\AbstractJob::getBeginning
      */
     public function testGetBeginning()
     {
@@ -65,8 +67,8 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Job\AbstractJob::getEnd
-     * @covers Gloubster\Job\AbstractJob::setEnd
+     * @covers Gloubster\Message\Job\AbstractJob::getEnd
+     * @covers Gloubster\Message\Job\AbstractJob::setEnd
      */
     public function testGetEnd()
     {
@@ -78,8 +80,8 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Job\AbstractJob::setProcessDuration
-     * @covers Gloubster\Job\AbstractJob::getProcessDuration
+     * @covers Gloubster\Message\Job\AbstractJob::setProcessDuration
+     * @covers Gloubster\Message\Job\AbstractJob::getProcessDuration
      */
     public function testSetProcessDuration()
     {
@@ -89,8 +91,8 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Job\AbstractJob::setDeliveryDuration
-     * @covers Gloubster\Job\AbstractJob::getDeliveryDuration
+     * @covers Gloubster\Message\Job\AbstractJob::setDeliveryDuration
+     * @covers Gloubster\Message\Job\AbstractJob::getDeliveryDuration
      */
     public function testSetDeliveryDuration()
     {
@@ -100,8 +102,8 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Job\AbstractJob::setWorkerId
-     * @covers Gloubster\Job\AbstractJob::getWorkerId
+     * @covers Gloubster\Message\Job\AbstractJob::setWorkerId
+     * @covers Gloubster\Message\Job\AbstractJob::getWorkerId
      */
     public function testSetWorkerId()
     {
@@ -111,7 +113,7 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Job\AbstractJob::requireReceipt
+     * @covers Gloubster\Message\Job\AbstractJob::requireReceipt
      */
     public function testRequireReceipt()
     {
@@ -119,7 +121,7 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Job\AbstractJob::getDelivery
+     * @covers Gloubster\Message\Job\AbstractJob::getDelivery
      */
     public function testGetDelivery()
     {
@@ -127,25 +129,26 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Job\AbstractJob::serialize
-     * @covers Gloubster\Job\AbstractJob::unserialize
+     * @covers Gloubster\Message\Job\AbstractJob::toJson
+     * @covers Gloubster\Message\Job\AbstractJob::fromJson
      */
-    public function testSerialize()
+    public function testJsonEncodeDecode()
     {
-        $this->assertEquals($this->object, unserialize(serialize($this->object)));
+        $this->assertEquals($this->object, Factory::fromJson($this->object->toJson()));
     }
 
     /**
-     * @covers Gloubster\Job\AbstractJob::serialize
+     * @covers Gloubster\Message\Job\AbstractJob::toJson
      */
-    public function testSerializeIsString()
+    public function testSerializeJsonIsString()
     {
-        $this->assertInternalType('string', serialize($this->object));
+        $this->assertInternalType('string', $this->object->toJson());
+        $this->assertInternalType('array', json_decode($this->object->toJson(), true));
     }
 
     /**
-     * @covers Gloubster\Job\AbstractJob::serialize
-     * @covers Gloubster\Job\AbstractJob::unserialize
+     * @covers Gloubster\Message\Job\AbstractJob::toJson
+     * @covers Gloubster\Message\Job\AbstractJob::fromJson
      */
     public function testSerializeWithData()
     {
@@ -155,12 +158,12 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
         $this->object->setDeliveryDuration(0.987654321);
         $this->object->setWorkerId('Jean Rochefort');
 
-        $this->assertEquals($this->object, unserialize(serialize($this->object)));
+        $this->assertEquals($this->object, Factory::fromJson($this->object->toJson()));
     }
 
     /**
-     * @covers Gloubster\Job\AbstractJob::getParameters
-     * @covers Gloubster\Job\AbstractJob::setParameters
+     * @covers Gloubster\Message\Job\AbstractJob::getParameters
+     * @covers Gloubster\Message\Job\AbstractJob::setParameters
      */
     public function testGetParameters()
     {
@@ -170,7 +173,7 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Job\AbstractJob::getMandatoryParameters
+     * @covers Gloubster\Message\Job\AbstractJob::getMandatoryParameters
      */
     public function testGetMandatoryParameters()
     {
@@ -178,7 +181,7 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Job\AbstractJob::isOk
+     * @covers Gloubster\Message\Job\AbstractJob::isOk
      */
     public function testIsOk()
     {
@@ -186,7 +189,7 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Job\AbstractJob::getRoutingKey
+     * @covers Gloubster\Message\Job\AbstractJob::getRoutingKey
      */
     public function testGetRoutingKey()
     {
@@ -194,10 +197,16 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Job\AbstractJob::getExchangeName
+     * @covers Gloubster\Message\Job\AbstractJob::getExchangeName
      */
     public function testGetExchangeName()
     {
         $this->assertInternalType('string', $this->object->getExchangeName());
     }
+
+    public function testValidJson()
+    {
+        $this->assertInternalType('array', json_decode($this->object->toJson(), true));
+    }
 }
+

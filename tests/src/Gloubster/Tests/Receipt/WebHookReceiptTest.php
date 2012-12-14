@@ -1,6 +1,8 @@
 <?php
 
-namespace Gloubster\Receipt;
+namespace Gloubster\Tests\Receipt;
+
+use Gloubster\Receipt\WebHookReceipt;
 
 class WebHookReceiptTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,14 +24,17 @@ class WebHookReceiptTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->hook = new WebHookReceipt($this->url, $this->parameter, $this->body);
+        $this->hook = new WebHookReceipt();
+        $this->hook->setUrl($this->url)
+            ->setParameter($this->parameter)
+            ->setUseBody($this->body);
         $this->hook->setClient($this->client);
     }
 
-    public function testSerialize()
+    public function testToArrayFromArray()
     {
         $hook = new WebHookReceipt($this->url, $this->parameter, $this->body);
-        $this->assertEquals($hook, unserialize(serialize($hook)));
+        $this->assertEquals($hook, WebHookReceipt::fromArray($hook->toArray()));
     }
 
     public function testAcknowledge()
@@ -50,12 +55,12 @@ class WebHookReceiptTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo($this->url), $this->equalTo(array('Content-Type' => 'application/json')), $this->equalTo(null))
             ->will($this->returnValue($request));
 
-        $job = $this->getMockBuilder('Gloubster\Job\JobInterface')
+        $job = $this->getMockBuilder('Gloubster\Message\Job\JobInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
         $job->expects($this->any())
-            ->method('serialize')
+            ->method('toJson')
             ->will($this->returnValue($serializedData));
 
         $this->hook->acknowledge($job);

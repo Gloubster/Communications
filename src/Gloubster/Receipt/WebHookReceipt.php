@@ -11,7 +11,7 @@
 
 namespace Gloubster\Receipt;
 
-use Gloubster\Job\JobInterface;
+use Gloubster\Message\Job\JobInterface;
 use Guzzle\Http\Client;
 use Guzzle\Common\Exception\GuzzleException;
 use Gloubster\Exception\RuntimeException;
@@ -21,17 +21,51 @@ class WebHookReceipt implements ReceiptInterface
     private $url;
     private $parameter;
     private $useBody;
+
     /**
      * @var \Guzzle\Http\Client
      */
     private $client;
 
-    public function __construct($url, $parameter = 'payload', $useBody = false)
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    public function setUrl($url)
     {
         $this->url = $url;
+
+        return $this;
+    }
+
+    public function getParameter()
+    {
+        return $this->parameter;
+    }
+
+    public function setParameter($parameter)
+    {
         $this->parameter = $parameter;
-        $this->useBody = $useBody;
-        $this->initClient();
+
+        return $this;
+    }
+
+    public function getName()
+    {
+        return 'web-hook';
+    }
+
+    public function setUseBody($boolean)
+    {
+        $this->useBody = (Boolean) $boolean;
+
+        return $this;
+    }
+
+    public function getUseBody()
+    {
+        return $this->useBody;
     }
 
     /**
@@ -39,7 +73,11 @@ class WebHookReceipt implements ReceiptInterface
      */
     public function acknowledge(JobInterface $job)
     {
-        $data = $job->serialize();
+        if (!$this->client) {
+            $this->initClient();
+        }
+
+        $data = $job->toJson();
         try {
             $request = $this->client->post($this->url, array('Content-Type' => 'application/json'), $this->useBody ? $data : null);
 
@@ -50,45 +88,9 @@ class WebHookReceipt implements ReceiptInterface
         } catch (GuzzleException $e) {
             throw new RuntimeException('A guzzle exception has been raised', $e->getCode(), $e);
         } catch (\Exception $e) {
+            var_dump($e->getMessage());
             throw new RuntimeException('A unexpected exception has been raised', $e->getCode(), $e);
         }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function serialize()
-    {
-        $data = array();
-
-        foreach ($this as $key => $value) {
-            if ($key === 'client') {
-                continue;
-            }
-            $data[$key] = $value;
-        }
-
-        return json_encode((object) $data);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function unserialize($serialized)
-    {
-        $data = json_decode($serialized, true);
-
-        if (! $data) {
-            throw new RuntimeException('Unable to unserialize data');
-        }
-
-        foreach ($data as $key => $value) {
-            $this->{$key} = $value;
-        }
-
-        $this->initClient();
 
         return $this;
     }
@@ -115,6 +117,40 @@ class WebHookReceipt implements ReceiptInterface
     public function getClient()
     {
         return $this->client;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toArray()
+    {
+        $data = array('name' => $this->getName());
+
+        foreach ($this as $key => $value) {
+            if ('client' === $key) {
+                continue;
+            }
+            $data[$key] = $value;
+        }
+
+        return $data;
+    }
+
+    public static function create($url, $parameter, $useBody = false)
+    {
+        $hook = new WebHookReceipt();
+
+        return $hook->setUrl($url)
+            ->setParameter($parameter)
+            ->setUseBody($useBody);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function fromArray(array $data)
+    {
+        return Factory::fromArray($data);
     }
 
     /**

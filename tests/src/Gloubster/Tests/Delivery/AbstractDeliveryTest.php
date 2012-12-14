@@ -1,6 +1,8 @@
 <?php
 
-namespace Gloubster\Delivery;
+namespace Gloubster\Tests\Delivery;
+
+use Gloubster\Delivery\Factory;
 
 /**
  * @covers Gloubster\Delivery\DeliveryInterface
@@ -75,9 +77,14 @@ abstract class AbstractDeliveryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($data, $this->readTarget());
     }
 
-    public function testSerialize()
+    public function testToArray()
     {
         $delivery = $this->getDelivery();
-        $this->assertEquals($delivery, unserialize(serialize($delivery)));
+        $this->assertEquals($delivery, Factory::fromArray($delivery->toArray()));
+    }
+
+    public function testFromArrayIsAnArray()
+    {
+        $this->assertInternalType('array', $this->getDelivery()->toArray());
     }
 }

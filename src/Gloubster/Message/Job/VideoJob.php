@@ -9,28 +9,19 @@
  * file that was distributed with this source code.
  */
 
-namespace Gloubster\Job;
+namespace Gloubster\Message\Job;
 
 use Gloubster\Exchange;
 use Gloubster\RoutingKey;
 use Gloubster\Delivery\DeliveryInterface;
 
-class VideoJob extends AbstractJob
+class VideoJob extends ImageJob
 {
     protected $source;
 
-    public function __construct($source, DeliveryInterface $delivery, array $parameters = array())
+    public function getName()
     {
-        parent::__construct();
-
-        $this->source = $source;
-        $this->delivery = $delivery;
-        $this->parameters = $parameters;
-    }
-
-    public function getSource()
-    {
-        return $this->source;
+        return 'video';
     }
 
     public function getMandatoryParameters()
@@ -47,5 +38,4 @@ class VideoJob extends AbstractJob
     {
         return Exchange::GLOUBSTER_DISPATCHER;
     }
-
 }

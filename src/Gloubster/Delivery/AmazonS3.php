@@ -12,7 +12,6 @@
 namespace Gloubster\Delivery;
 
 use Aws\Common\Enum\Region;
-use Aws\Common\Aws;
 use Aws\S3\Enum\CannedAcl;
 use Aws\S3\S3Client;
 use Aws\Common\Enum\Size;
@@ -28,7 +27,7 @@ class AmazonS3 implements DeliveryInterface
     /**
      * @var integer
      */
-    public static $MULTIPART_UPLOAD_MB_CHUNK;
+    public static $multipartUploadChunk;
     /**
      * @var string
      */
@@ -48,7 +47,9 @@ class AmazonS3 implements DeliveryInterface
     /**
      * @var array
      */
-    private $options;
+    private $options = array(
+        'region' => Region::EU_WEST_1
+    );
     /**
      * @var Boolean
      */
@@ -63,22 +64,133 @@ class AmazonS3 implements DeliveryInterface
      * @param string $acl A CannedAcl::* value
      * @param integer $uploadChunk The maximum size of a upload chunk
      */
-    public function __construct($bucketName, $objectKey, array $options, $acl = CannedAcl::PRIVATE_ACCESS, $uploadChunk = 10)
+    public static function create($bucketName, $objectKey, array $options, $acl = CannedAcl::PRIVATE_ACCESS, $uploadChunk = 10)
     {
-        $this->acl                       = $acl;
-        $this->bucketName                = $bucketName;
-        $this->objectKey                 = $objectKey;
-        $this->acl                       = $acl;
-        self::$MULTIPART_UPLOAD_MB_CHUNK = $uploadChunk;
+        $obj = new static();
 
-        $this->options = array_merge(
-            array(
-                 'region' => Region::EU_WEST_1
-            ), $options
-        );
+        $obj->setAcl($acl)
+            ->setBucketName($bucketName)
+            ->setObjectKey($objectKey)
+            ->setMultipartUploadChunk($uploadChunk)
+            ->addOptions($options);
 
-        $this->initClient();
+        return $obj;
     }
+
+    /**
+     * @param int $multipartUploadChunk
+     */
+    public function setMultipartUploadChunk($multipartUploadChunk)
+    {
+        self::$multipartUploadChunk = $multipartUploadChunk;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public static function GetMultipartUploadChunk()
+    {
+        return self::$multipartUploadChunk;
+    }
+
+    /**
+     * @param string $acl
+     */
+    public function setAcl($acl)
+    {
+        $this->acl = $acl;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAcl()
+    {
+        return $this->acl;
+    }
+
+    /**
+     * @param string $bucketName
+     */
+    public function setBucketName($bucketName)
+    {
+        $this->bucketName = $bucketName;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBucketName()
+    {
+        return $this->bucketName;
+    }
+
+    /**
+     * @param boolean $delivered
+     */
+    public function setDelivered($delivered)
+    {
+        $this->delivered = $delivered;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getDelivered()
+    {
+        return $this->delivered;
+    }
+
+    /**
+     * @param string $objectKey
+     */
+    public function setObjectKey($objectKey)
+    {
+        $this->objectKey = $objectKey;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getObjectKey()
+    {
+        return $this->objectKey;
+    }
+
+    /**
+     * @param array $options
+     */
+    public function addOptions($options)
+    {
+        $this->options = array_merge($this->options, $options);
+
+        return $this;
+    }
+    public function setOptions($options)
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
 
     /**
      * {@inheritdoc}
@@ -106,6 +218,7 @@ class AmazonS3 implements DeliveryInterface
     public function deliverBinary($data)
     {
         try {
+            $this->initClient();
             $this->client->getCommand('PutObject', array(
                 'Bucket' => $this->bucketName,
                 'Key'    => $this->objectKey,
@@ -127,12 +240,13 @@ class AmazonS3 implements DeliveryInterface
      */
     public function deliverFile($pathfile)
     {
+        $this->initClient();
         $uploader = UploadBuilder::newInstance()
             ->setClient($this->client)
             ->setSource($pathfile)
             ->setBucket($this->bucketName)
             ->setKey($this->objectKey)
-            ->setMinPartSize(self::$MULTIPART_UPLOAD_MB_CHUNK * Size::MB)
+            ->setMinPartSize(self::$multipartUploadChunk * Size::MB)
             ->build();
 
         try {
@@ -156,6 +270,7 @@ class AmazonS3 implements DeliveryInterface
     public function fetch($id)
     {
         try {
+            $this->initClient();
             $command = $this->client->getCommand('GetObject', array(
                'Bucket' => $this->bucketName,
                'Key'    => $this->objectKey,
@@ -173,38 +288,26 @@ class AmazonS3 implements DeliveryInterface
     /**
      * {@inheritdoc}
      */
-    public function serialize()
+    public function toArray()
     {
-        $data = array();
+        $data = array('name' => $this->getName());
 
         foreach ($this as $key => $value) {
-            if ($key === 'client') {
+            if ('client' === $key) {
                 continue;
             }
             $data[$key] = $value;
         }
 
-        return json_encode((object) $data);
+        return $data;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function unserialize($serialized)
+    public static function fromArray(array $data)
     {
-        $data = json_decode($serialized, true);
-
-        if (! $data) {
-            throw new RuntimeException('Unable to unserialize data');
-        }
-
-        foreach ($data as $key => $value) {
-            $this->{$key} = $value;
-        }
-
-        $this->initClient();
-
-        return $this;
+        return Factory::fromArray($data);
     }
 
     /**
@@ -214,7 +317,7 @@ class AmazonS3 implements DeliveryInterface
      *
      * @return AmazonS3
      */
-    public function setClient(S3Client $client)
+    public function setClient(S3Client $client = null)
     {
         $this->client = $client;
 
@@ -238,6 +341,10 @@ class AmazonS3 implements DeliveryInterface
      */
     private function initClient()
     {
+        if ($this->client) {
+            return;
+        }
+
         try {
             $this->client = S3Client::factory($this->options);
         } catch (AwsExceptionInterface $e) {

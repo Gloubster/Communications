@@ -1,8 +1,9 @@
 <?php
 
-namespace Gloubster;
+namespace Gloubster\Tests;
 
 use Gloubster\Configuration;
+use Gloubster\RabbitMQFactory;
 
 class RabbitMQFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,7 +13,7 @@ class RabbitMQFactoryTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->configuration = new Configuration(file_get_contents(__DIR__ . '/../../resources/config.tests.json'));
+        $this->configuration = new Configuration(file_get_contents(__DIR__ . '/../../../resources/config.tests.json'));
     }
 
     /**

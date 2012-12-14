@@ -11,10 +11,30 @@
 
 namespace Gloubster\Receipt;
 
-use Gloubster\Job\JobInterface;
+use Gloubster\Message\Job\JobInterface;
 
-interface ReceiptInterface extends \Serializable
+interface ReceiptInterface
 {
+    /**
+     * Returns
+     */
+    public function getName();
     public function acknowledge(JobInterface $job);
+
+    /**
+     * Returns an Array representation of the Receipt
+     *
+     * @return Array
+     */
+    public function toArray();
+
+    /**
+     * Creates a new receipt instance based on serialized data
+     *
+     * @param array $data Serialized data
+     *
+     * @return ReceiptInterface
+     */
+    public static function fromArray(array $data);
 }
 

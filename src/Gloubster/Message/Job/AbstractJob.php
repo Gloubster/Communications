@@ -9,13 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Gloubster\Job;
+namespace Gloubster\Message\Job;
 
+use Gloubster\Message\AbstractMessage;
+use Gloubster\Delivery\DeliveryInterface;
 use Gloubster\Exception\InvalidArgumentException;
 use Gloubster\Exception\RuntimeException;
 use Gloubster\Receipt\ReceiptInterface;
 
-abstract class AbstractJob implements JobInterface
+abstract class AbstractJob extends AbstractMessage implements JobInterface
 {
     private $beginning;
     private $end;
@@ -24,14 +26,14 @@ abstract class AbstractJob implements JobInterface
     private $processDuration;
     private $deliveryDuration;
     private $workerId;
-    private $receipts;
-    protected $parameters;
+    private $receipts = array();
+    protected $parameters = array();
     protected $delivery;
 
     public function __construct()
     {
-        $this->beginning = microtime(true);
-        $this->error = false;
+        $this->beginning = (string) microtime(true);
+        $this->error     = false;
     }
 
     /**
@@ -80,6 +82,13 @@ abstract class AbstractJob implements JobInterface
         return $this->delivery;
     }
 
+    public function setDelivery(DeliveryInterface $delivery = null)
+    {
+        $this->delivery = $delivery;
+
+        return $this;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -121,7 +130,14 @@ abstract class AbstractJob implements JobInterface
      */
     public function getBeginning()
     {
-        return $this->beginning;
+        return null === $this->beginning ? $this->beginning : (float) $this->beginning;
+    }
+
+    public function setBeginning($beginning)
+    {
+        $this->beginning = (string) $beginning;
+
+        return $this;
     }
 
     /**
@@ -129,7 +145,7 @@ abstract class AbstractJob implements JobInterface
      */
     public function setEnd($microtime)
     {
-        $this->end = $microtime;
+        $this->end = (string) $microtime;
 
         return $this;
     }
@@ -139,7 +155,7 @@ abstract class AbstractJob implements JobInterface
      */
     public function getEnd()
     {
-        return $this->end;
+        return null === $this->end ? $this->end : (float) $this->end;
     }
 
     /**
@@ -207,45 +223,14 @@ abstract class AbstractJob implements JobInterface
     /**
      * {@inheritdoc}
      */
-    public function serialize()
-    {
-        $data = array();
-
-        foreach ($this as $key => $parameter) {
-            $data[$key] = serialize($parameter);
-        }
-
-        return serialize($data);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function unserialize($serialized)
-    {
-        $data = unserialize($serialized);
-
-        if (!is_array($data)) {
-            throw new RuntimeException('Unable to unserialize data');
-        }
-
-        foreach ($data as $key => $serializedValue) {
-            $this->{$key} = unserialize($serializedValue);
-        }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function setReceipts(array $receipts)
     {
-        array_map(function($receipt) {
-            if (!$receipt instanceof ReceiptInterface) {
-                throw new InvalidArgumentException('setReceipts only accept ReceiptInterface');
-            }
-        }, $receipts);
+        array_map(function ($receipt) {
+                if (! $receipt instanceof ReceiptInterface) {
+                    throw new InvalidArgumentException('setReceipts only accept ReceiptInterface');
+                }
+            }, $receipts
+        );
 
         $this->receipts = $receipts;
 
@@ -268,5 +253,28 @@ abstract class AbstractJob implements JobInterface
         array_push($this->receipts, $receipt);
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getArrayData()
+    {
+        $data = array();
+
+        foreach ($this as $key => $parameter) {
+            if ($key === 'delivery' && null !== $parameter) {
+                $data[$key] = $parameter->toArray();
+            } elseif ($key === 'receipts' && null !== $parameter) {
+                $data[$key] = array();
+                foreach ($parameter as $receipt) {
+                    $data[$key][] = $receipt->toArray();
+                }
+            } else {
+                $data[$key] = $parameter;
+            }
+        }
+
+        return $data;
     }
 }

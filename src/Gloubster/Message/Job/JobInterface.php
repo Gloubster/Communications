@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Gloubster\Job;
+namespace Gloubster\Message\Job;
 
-use Gloubster\MessageInterface;
+use Gloubster\Message\MessageInterface;
 use Gloubster\Delivery\DeliveryInterface;
 use Gloubster\Exception\RuntimeException;
 use Gloubster\Receipt\ReceiptInterface;
@@ -139,6 +139,8 @@ interface JobInterface extends MessageInterface
      * @return float
      */
     public function getBeginning();
+
+    public function setBeginning($beginning);
 
     /**
      * Returns the timestamp when the job has been finished with microsecond precision.
