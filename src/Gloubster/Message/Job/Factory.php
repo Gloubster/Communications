@@ -32,6 +32,10 @@ class Factory
 
         $classname = sprintf($data['type']);
 
+        if (!class_exists($classname)) {
+            throw new RuntimeException(sprintf('Invalid Job class : class %s does not exists', $classname));
+        }
+
         $obj = new $classname();
 
         if (!$obj instanceof JobInterface) {
