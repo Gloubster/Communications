@@ -270,12 +270,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/romainneutron/php-amqplib.git",
-                "reference": "46f0441a7f08f6989c25208eab29f8959887bb50"
+                "reference": "a8cb41714f3c4cb98565a0050afec3af8a7f5935"
             },
             "require": {
                 "php": ">=5.3.0"
             },
-            "time": "2012-12-20 18:31:43",
+            "time": "2012-12-22 20:40:30",
             "type": "library",
             "installation-source": "source",
             "autoload": {
