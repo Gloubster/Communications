@@ -118,7 +118,7 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->object->getEnd());
         $this->object->setEnd(microtime(true));
         $this->assertInternalType('float', $this->object->getEnd());
-        $this->assertGreaterThanOrEqual((float) (string)microtime(true), $this->object->getEnd());
+        $this->assertLessThanOrEqual((float) (string)microtime(true), $this->object->getEnd());
         $this->assertLessthanOrEqual($this->object->getEnd(), $this->object->getBeginning());
     }
 
