@@ -164,7 +164,7 @@ abstract class AbstractJob extends AbstractMessage implements JobInterface
 
     public function setBeginning($beginning)
     {
-        $this->beginning = (string) $beginning;
+        $this->beginning = null !== $beginning ? (string) $beginning : null;
 
         return $this;
     }
@@ -174,7 +174,7 @@ abstract class AbstractJob extends AbstractMessage implements JobInterface
      */
     public function setEnd($microtime)
     {
-        $this->end = (string) $microtime;
+        $this->end = null !== $microtime ? (string) $microtime : null;
 
         return $this;
     }

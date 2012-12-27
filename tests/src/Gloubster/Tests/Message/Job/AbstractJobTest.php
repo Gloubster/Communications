@@ -205,6 +205,15 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Gloubster\Message\Job\AbstractJob::toJson
+     * @covers Gloubster\Message\Job\AbstractJob::fromJson
+     */
+    public function testSerializeWithNoData()
+    {
+        $this->assertEquals($this->object, Factory::fromJson($this->object->toJson()));
+    }
+
+    /**
      * @covers Gloubster\Message\Job\AbstractJob::getParameters
      * @covers Gloubster\Message\Job\AbstractJob::setParameters
      */
