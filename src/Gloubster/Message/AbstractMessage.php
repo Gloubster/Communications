@@ -11,7 +11,7 @@
 
 namespace Gloubster\Message;
 
-abstract class AbstractMessage
+abstract class AbstractMessage implements MessageInterface
 {
     /**
      * {@inheritdoc}
