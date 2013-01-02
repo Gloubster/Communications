@@ -4,6 +4,7 @@ namespace Gloubster\Tests\Message\Acknowledgement;
 
 use Gloubster\Message\Acknowledgement\Factory;
 use Gloubster\Message\Acknowledgement\JobAcknowledgement;
+use Gloubster\Message\Acknowledgement\JobNotAcknowledgement;
 use Gloubster\Message\Presence\WorkerPresence;
 
 class FactoryTests extends \PHPUnit_Framework_TestCase
@@ -21,8 +22,12 @@ class FactoryTests extends \PHPUnit_Framework_TestCase
     {
         $ack = new JobAcknowledgement();
 
+        $nack = new JobNotAcknowledgement();
+        $nack->setReason('Man machine');
+
         return array(
             array($ack, $ack->toJson()),
+            array($nack, $nack->toJson()),
         );
     }
 
