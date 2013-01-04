@@ -19,6 +19,12 @@ interface ReceiptInterface
      * Returns
      */
     public function getName();
+
+    /**
+     * Acknowledge the reception
+     *
+     * @param JobInterface $job
+     */
     public function acknowledge(JobInterface $job);
 
     /**
