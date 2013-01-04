@@ -88,7 +88,6 @@ class WebHookReceipt implements ReceiptInterface
         } catch (GuzzleException $e) {
             throw new RuntimeException('A guzzle exception has been raised', $e->getCode(), $e);
         } catch (\Exception $e) {
-            var_dump($e->getMessage());
             throw new RuntimeException('A unexpected exception has been raised', $e->getCode(), $e);
         }
 
