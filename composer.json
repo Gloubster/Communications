@@ -8,17 +8,20 @@
         }
     ],
     "require": {
-        "aws/aws-sdk-php": "dev-master",
         "justinrainbow/json-schema": "*"
     },
     "require-dev": {
         "symfony/finder": ">=2.0,<=2.2.x-dev",
-        "symfony/filesystem": ">=2.0,<=2.2.x-dev"
+        "symfony/filesystem": ">=2.0,<=2.2.x-dev",
+        "aws/aws-sdk-php": "2.0.*"
     },
     "minimum-stability": "dev",
     "autoload": {
         "psr-0": {
             "Gloubster": "src"
         }
+    },
+    "suggest": {
+        "aws/aws-sdk-php": "Amazon SDK library to enable AmazonS3 delivery"
     }
 }

@@ -1,18 +1,75 @@
 {
-    "hash": "2aec614612480518a933f590dd00c0f9",
+    "hash": "b3de3378921304ddad9d3e5a4d65624d",
     "packages": [
         {
-            "name": "aws/aws-sdk-php",
+            "name": "justinrainbow/json-schema",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/aws/aws-sdk-php",
-                "reference": "aa0edec95a03a49b2269dc8a52ea10c87413d07e"
+                "url": "git://github.com/justinrainbow/json-schema.git",
+                "reference": "1.2.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/aws/aws-sdk-php/archive/aa0edec95a03a49b2269dc8a52ea10c87413d07e.zip",
-                "reference": "aa0edec95a03a49b2269dc8a52ea10c87413d07e",
+                "url": "https://github.com/justinrainbow/json-schema/archive/1.2.2.zip",
+                "reference": "1.2.2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "time": "2012-11-29 16:11:18",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "JsonSchema": "src/"
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Igor Wiedler",
+                    "email": "igor@wiedler.ch",
+                    "homepage": "http://wiedler.ch/igor/"
+                },
+                {
+                    "name": "Bruno Prieto Reis",
+                    "email": "bruno.p.reis@gmail.com"
+                },
+                {
+                    "name": "Justin Rainbow",
+                    "email": "justin.rainbow@gmail.com"
+                },
+                {
+                    "name": "Robert Schönthal",
+                    "email": "seroscho@googlemail.com",
+                    "homepage": "http://digitalkaoz.net"
+                }
+            ],
+            "description": "A library to validate a json schema.",
+            "homepage": "https://github.com/justinrainbow/json-schema",
+            "keywords": [
+                "json",
+                "schema"
+            ]
+        }
+    ],
+    "packages-dev": [
+        {
+            "name": "aws/aws-sdk-php",
+            "version": "2.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aws/aws-sdk-php",
+                "reference": "2.0.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/aws/aws-sdk-php/archive/2.0.3.zip",
+                "reference": "2.0.3",
                 "shasum": ""
             },
             "require": {
@@ -26,9 +83,9 @@
                 "ext-apc": "*",
                 "phpunit/phpunit": "3.7.*"
             },
-            "time": "2013-01-03 22:20:07",
+            "time": "2012-12-20 22:46:13",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Aws": "src/"
@@ -155,61 +212,6 @@
             ]
         },
         {
-            "name": "justinrainbow/json-schema",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "git://github.com/justinrainbow/json-schema.git",
-                "reference": "1.2.2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/justinrainbow/json-schema/archive/1.2.2.zip",
-                "reference": "1.2.2",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "time": "2012-11-29 16:11:18",
-            "type": "library",
-            "installation-source": "source",
-            "autoload": {
-                "psr-0": {
-                    "JsonSchema": "src/"
-                }
-            },
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Igor Wiedler",
-                    "email": "igor@wiedler.ch",
-                    "homepage": "http://wiedler.ch/igor/"
-                },
-                {
-                    "name": "Bruno Prieto Reis",
-                    "email": "bruno.p.reis@gmail.com"
-                },
-                {
-                    "name": "Justin Rainbow",
-                    "email": "justin.rainbow@gmail.com"
-                },
-                {
-                    "name": "Robert Schönthal",
-                    "email": "seroscho@googlemail.com",
-                    "homepage": "http://digitalkaoz.net"
-                }
-            ],
-            "description": "A library to validate a json schema.",
-            "homepage": "https://github.com/justinrainbow/json-schema",
-            "keywords": [
-                "json",
-                "schema"
-            ]
-        },
-        {
             "name": "symfony/event-dispatcher",
             "version": "dev-master",
             "target-dir": "Symfony/Component/EventDispatcher",
@@ -263,9 +265,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com"
-        }
-    ],
-    "packages-dev": [
+        },
         {
             "name": "symfony/filesystem",
             "version": "dev-master",
@@ -367,7 +367,7 @@
 
     ],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "aws/aws-sdk-php": 20
-    }
+    "stability-flags": [
+
+    ]
 }

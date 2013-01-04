@@ -55,6 +55,14 @@ class AmazonS3 implements DeliveryInterface
      */
     private $delivered;
 
+    public function __construct()
+    {
+        if (!class_exists('Aws\\S3\\S3Client')) {
+            throw new RuntimeException('Aws SDK library version 2.0 or higher '
+                . ' is required to use AmazonS3 delivery');
+        }
+    }
+
     /**
      * Constructor, will create a S3Client based on the given options
      *
