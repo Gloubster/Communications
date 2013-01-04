@@ -1,5 +1,5 @@
 {
-    "hash": "9fc320f4d7ae049868ae31f6c64bd0c2",
+    "hash": "2aec614612480518a933f590dd00c0f9",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -7,12 +7,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php",
-                "reference": "2.0.3"
+                "reference": "aa0edec95a03a49b2269dc8a52ea10c87413d07e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/aws/aws-sdk-php/archive/2.0.3.zip",
-                "reference": "2.0.3",
+                "url": "https://github.com/aws/aws-sdk-php/archive/aa0edec95a03a49b2269dc8a52ea10c87413d07e.zip",
+                "reference": "aa0edec95a03a49b2269dc8a52ea10c87413d07e",
                 "shasum": ""
             },
             "require": {
@@ -26,7 +26,7 @@
                 "ext-apc": "*",
                 "phpunit/phpunit": "3.7.*"
             },
-            "time": "2012-12-20 22:46:13",
+            "time": "2013-01-03 22:20:07",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -61,12 +61,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle",
-                "reference": "v3.0.7"
+                "reference": "a2e051ce52ae527cc352c324fe220390460166fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/guzzle/guzzle/archive/v3.0.7.zip",
-                "reference": "v3.0.7",
+                "url": "https://github.com/guzzle/guzzle/archive/a2e051ce52ae527cc352c324fe220390460166fd.zip",
+                "reference": "a2e051ce52ae527cc352c324fe220390460166fd",
                 "shasum": ""
             },
             "require": {
@@ -113,7 +113,7 @@
                 "zend/zend-cache": "2.0.0beta3",
                 "zend/zend-log": "2.0.0beta3"
             },
-            "time": "2012-12-19 23:06:35",
+            "time": "2012-12-31 05:22:54",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -263,47 +263,111 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com"
-        },
+        }
+    ],
+    "packages-dev": [
         {
-            "name": "videlalvaro/php-amqplib",
+            "name": "symfony/filesystem",
             "version": "dev-master",
+            "target-dir": "Symfony/Component/Filesystem",
             "source": {
                 "type": "git",
-                "url": "git://github.com/romainneutron/php-amqplib.git",
-                "reference": "a8cb41714f3c4cb98565a0050afec3af8a7f5935"
+                "url": "https://github.com/symfony/Filesystem",
+                "reference": "1747c69853d974a9bc87fb9a0e5b55ad2a785577"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/symfony/Filesystem/archive/1747c69853d974a9bc87fb9a0e5b55ad2a785577.zip",
+                "reference": "1747c69853d974a9bc87fb9a0e5b55ad2a785577",
+                "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=5.3.3"
             },
-            "time": "2012-12-22 20:40:30",
+            "time": "2012-12-14 22:27:02",
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
             "installation-source": "source",
             "autoload": {
                 "psr-0": {
-                    "PhpAmqpLib": ""
+                    "Symfony\\Component\\Filesystem\\": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
             "authors": [
                 {
-                    "name": "Alvaro Videla"
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
                 }
             ],
-            "description": "This library is a pure PHP implementation of the AMQP protocol. It's been tested against RabbitMQ.",
-            "homepage": "https://github.com/videlalvaro/php-amqplib/",
-            "keywords": [
-                "rabbitmq",
-                "message",
-                "queue"
-            ]
+            "description": "Symfony Filesystem Component",
+            "homepage": "http://symfony.com"
+        },
+        {
+            "name": "symfony/finder",
+            "version": "dev-master",
+            "target-dir": "Symfony/Component/Finder",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Finder",
+                "reference": "b43123d66d1426b9699abf25a9d581e4c5f5f158"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/symfony/Finder/archive/b43123d66d1426b9699abf25a9d581e4c5f5f158.zip",
+                "reference": "b43123d66d1426b9699abf25a9d581e4c5f5f158",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "time": "2013-01-02 11:29:42",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Finder\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Finder Component",
+            "homepage": "http://symfony.com"
         }
     ],
-    "packages-dev": null,
     "aliases": [
 
     ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "aws/aws-sdk-php": 20,
-        "videlalvaro/php-amqplib": 20
+        "aws/aws-sdk-php": 20
     }
 }

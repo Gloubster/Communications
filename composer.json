@@ -7,16 +7,9 @@
             "email": "imprec@gmail.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "git",
-            "url": "git://github.com/romainneutron/php-amqplib.git"
-        }
-    ],
     "require": {
         "aws/aws-sdk-php": "dev-master",
-        "justinrainbow/json-schema": "*",
-        "videlalvaro/php-amqplib": "dev-master"
+        "justinrainbow/json-schema": "*"
     },
     "require-dev": {
         "symfony/finder": ">=2.0,<=2.2.x-dev",
