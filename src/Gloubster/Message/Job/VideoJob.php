@@ -11,7 +11,7 @@
 
 namespace Gloubster\Message\Job;
 
-use Gloubster\RabbitMQ\Configuration as RabbitMQConfiguration;
+use Gloubster\Configuration as RabbitMQConfiguration;
 
 class VideoJob extends ImageJob
 {
