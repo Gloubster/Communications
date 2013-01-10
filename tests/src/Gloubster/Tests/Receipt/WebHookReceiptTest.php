@@ -37,6 +37,16 @@ class WebHookReceiptTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($hook, WebHookReceipt::fromArray($hook->toArray()));
     }
 
+    public function testToArray()
+    {
+        $hook = new WebHookReceipt($this->url, $this->parameter, $this->body);
+        $data = $hook->toArray();
+
+        $this->assertArrayHasKey('url', $data);
+        $this->assertArrayHasKey('parameter', $data);
+        $this->assertArrayHasKey('useBody', $data);
+    }
+
     public function testAcknowledge()
     {
         $serializedData = json_encode(array('result' => 'BINGO'));

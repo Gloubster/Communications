@@ -16,11 +16,14 @@ use Guzzle\Http\Client;
 use Guzzle\Common\Exception\GuzzleException;
 use Gloubster\Exception\RuntimeException;
 
-class WebHookReceipt implements ReceiptInterface
+class WebHookReceipt extends AbstractReceipt
 {
-    private $url;
-    private $parameter;
-    private $useBody;
+    /**
+     * these data must be accessible by abstract parent for array serialization.
+     */
+    protected $url;
+    protected $parameter;
+    protected $useBody;
 
     /**
      * @var \Guzzle\Http\Client
@@ -119,22 +122,14 @@ class WebHookReceipt implements ReceiptInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Create a new WebHookReceipt
+     *
+     * @param string $url       The URL of the WebHook
+     * @param string $parameter If provided, the post parameter to attach Json
+     * @param Boolean $useBody  If set to true, Json will be provided in the request body
+     *
+     * @return WebHookReceipt
      */
-    public function toArray()
-    {
-        $data = array('name' => $this->getName());
-
-        foreach ($this as $key => $value) {
-            if ('client' === $key) {
-                continue;
-            }
-            $data[$key] = $value;
-        }
-
-        return $data;
-    }
-
     public static function create($url, $parameter, $useBody = false)
     {
         $hook = new WebHookReceipt();
@@ -142,14 +137,6 @@ class WebHookReceipt implements ReceiptInterface
         return $hook->setUrl($url)
                 ->setParameter($parameter)
                 ->setUseBody($useBody);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function fromArray(array $data)
-    {
-        return Factory::fromArray($data);
     }
 
     /**

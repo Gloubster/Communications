@@ -17,15 +17,11 @@ class Factory
 {
     public static function fromArray(array $data)
     {
-        if (!isset($data['name'])) {
-            throw new RuntimeException('Invalid receipt data : missing key `name`');
+        if (!isset($data['type'])) {
+            throw new RuntimeException('Invalid receipt data : missing key `type`');
         }
 
-        $name = implode('', array_map(function ($chunk) {
-                                  return ucfirst($chunk);
-                              }, explode('-', $data['name'])));
-
-        $classname = sprintf('%s\\%sReceipt', __NAMESPACE__, $name);
+        $classname = $data['type'];
 
         if (!class_exists($classname)) {
             throw new RuntimeException(sprintf('Invalid receipt data : class %s does not exists', $classname));
@@ -38,7 +34,7 @@ class Factory
         }
 
         foreach ($data as $key => $serializedValue) {
-            if ($key === 'name') {
+            if (in_array($key, array('name', 'type'))) {
                 continue;
             }
             $obj->{'set' . ucfirst($key)}($serializedValue);
