@@ -255,11 +255,10 @@ abstract class AbstractJob extends AbstractMessage implements JobInterface
     public function setReceipts(array $receipts)
     {
         array_map(function ($receipt) {
-                if (! $receipt instanceof ReceiptInterface) {
-                    throw new InvalidArgumentException('setReceipts only accept ReceiptInterface');
-                }
-            }, $receipts
-        );
+            if (! $receipt instanceof ReceiptInterface) {
+                throw new InvalidArgumentException('setReceipts only accept ReceiptInterface');
+            }
+        }, $receipts);
 
         $this->receipts = $receipts;
 
@@ -277,7 +276,7 @@ abstract class AbstractJob extends AbstractMessage implements JobInterface
     /**
      * {@inheritdoc}
      */
-    public function pushReceipt(ReceiptInterface $receipt)
+    public function addReceipt(ReceiptInterface $receipt)
     {
         array_push($this->receipts, $receipt);
 

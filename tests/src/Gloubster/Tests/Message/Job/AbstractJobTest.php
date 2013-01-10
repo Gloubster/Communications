@@ -81,10 +81,10 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Gloubster\Message\Job\AbstractJob::pushReceipt
+     * @covers Gloubster\Message\Job\AbstractJob::addReceipt
      * @covers Gloubster\Message\Job\AbstractJob::getReceipts
      */
-    public function testPushReceipt()
+    public function testAddReceipt()
     {
         $this->object->setReceipts(array());
         $this->assertCount(0, $this->object->getReceipts());
@@ -93,10 +93,10 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->object->pushReceipt($receipt);
+        $this->object->addReceipt($receipt);
         $this->assertEquals(array($receipt), $this->object->getReceipts());
 
-        $this->object->pushReceipt($receipt);
+        $this->object->addReceipt($receipt);
         $this->assertEquals(array($receipt, $receipt), $this->object->getReceipts());
     }
 

@@ -109,7 +109,7 @@ interface JobInterface extends MessageInterface
      * @param ReceiptInterface $receipt
      * @return JobInterface
      */
-    public function pushReceipt(ReceiptInterface $receipt);
+    public function addReceipt(ReceiptInterface $receipt);
 
     /**
      * Set the worker Id that has processed the Job.
