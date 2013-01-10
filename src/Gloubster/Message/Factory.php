@@ -15,7 +15,16 @@ use Gloubster\Exception\RuntimeException;
 
 class Factory
 {
-
+    /**
+     * The Message Factory handles Gloubster Communication JSON serialized
+     * messages and transform it to Gloubster Message objects
+     *
+     * @param string $json
+     *
+     * @return MessageInterface
+     *
+     * @throws RuntimeException In case of failure
+     */
     public static function fromJson($json)
     {
         $data = json_decode($json, true);

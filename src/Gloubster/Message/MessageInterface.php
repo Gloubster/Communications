@@ -21,7 +21,7 @@ interface MessageInterface
     public function getName();
 
     /**
-     * Returns a serialized representation of the message
+     * Returns a Json serialized representation of the message
      *
      * @return string
      */
