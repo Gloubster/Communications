@@ -13,6 +13,7 @@ namespace Gloubster\Message\Job;
 
 use Gloubster\Message\MessageInterface;
 use Gloubster\Delivery\DeliveryInterface;
+use Gloubster\Exception\InvalidArgumentException;
 use Gloubster\Exception\RuntimeException;
 use Gloubster\Receipt\ReceiptInterface;
 
@@ -24,23 +25,27 @@ interface JobInterface extends MessageInterface
      * An exception can be thrown if requested.
      *
      * @param Boolean $throwException
+     *
      * @return Boolean
+     *
      * @throws RuntimeException in case exception have been requested
      */
     public function isOk($throwException = false);
 
     /**
-     * Set error flag.
+     * Sets error flag.
      *
      * @param Boolean $boolean
+     *
      * @return JobInterface
      */
     public function setError($boolean);
 
     /**
-     * Set processing error message.
+     * Sets processing error message.
      *
      * @param string $message
+     *
      * @return JobInterface
      */
     public function setErrorMessage($message);
@@ -53,9 +58,22 @@ interface JobInterface extends MessageInterface
     public function getErrorMessage();
 
     /**
-     * Set an array of key/value parameters.
+     * Adds a key/value parameter.
+     *
+     * If a parameter with the same key already exists, it will be overriden.
+     *
+     * @param string $name
+     * @param string $value
+     *
+     * @return JobInterface
+     */
+    public function addParameter($name, $value);
+
+    /**
+     * Sets an array of key/value parameters.
      *
      * @param array $parameters
+     *
      * @return JobInterface
      */
     public function setParameters(array $parameters);
@@ -66,6 +84,37 @@ interface JobInterface extends MessageInterface
      * @return array
      */
     public function getParameters();
+
+    /**
+     * Returns a parameter depending on its key.
+     *
+     * @param string $name
+     *
+     * @return string the value
+     *
+     * @throws InvalidArgumentException In case the parameter does not exist.
+     */
+    public function getParameter($name);
+
+    /**
+     * Checks the presence of a parameter.
+     *
+     * @param string $name
+     *
+     * @return Boolean return true if the parameter is set
+     */
+    public function hasParameter($name);
+
+    /**
+     * Removes the parameter.
+     *
+     * @param string $name
+     *
+     * @return JobInterface
+     *
+     * @throws InvalidArgumentException In case the parameter does not exist
+     */
+    public function removeParameter($name);
 
     /**
      * Returns an array of key/value parameters required to execute the job.
@@ -89,38 +138,41 @@ interface JobInterface extends MessageInterface
     public function requireReceipt();
 
     /**
-     * Return an array of ReceiptInterface as post-process receipt.
+     * Returns an array of ReceiptInterface as post-process receipt.
      *
      * @return array
      */
     public function getReceipts();
 
     /**
-     * Set an array of ReceiptInterface as receipts.
+     * Sets an array of ReceiptInterface as receipts.
      *
      * @param array $receipts
+     *
      * @return JobInterface
      */
     public function setReceipts(array $receipts);
 
     /**
-     * Push a Receipt to the array of receipts.
+     * Pushes a Receipt to the array of receipts.
      *
      * @param ReceiptInterface $receipt
+     *
      * @return JobInterface
      */
     public function addReceipt(ReceiptInterface $receipt);
 
     /**
-     * Set the worker Id that has processed the Job.
+     * Sets the worker Id that has processed the Job.
      *
      * @param string $id
+     *
      * @return JobInterface
      */
     public function setWorkerId($id);
 
     /**
-     * Return the worked Id taht has processed the job.
+     * Returns the worked Id taht has processed the job.
      *
      * @return null|string Returns null in case the job has not yet been processed.
      */
@@ -134,12 +186,28 @@ interface JobInterface extends MessageInterface
     public function getDelivery();
 
     /**
+     * Sets the delivery method for this job.
+     *
+     * @param DeliveryInterface $delivery The delivery
+     *
+     * @return JobInterface
+     */
+    public function setDelivery(DeliveryInterface $delivery);
+
+    /**
      * Returns the timestamp when the job has been created with microsecond precision.
      *
      * @return float
      */
     public function getBeginning();
 
+    /**
+     * Sets the beginning timestamp (with microseconds) of a Job
+     *
+     * @param float $beginning
+     *
+     * @return JobInterface
+     */
     public function setBeginning($beginning);
 
     /**
@@ -151,17 +219,19 @@ interface JobInterface extends MessageInterface
     public function getEnd();
 
     /**
-     * Set the job end time. Job ends when it has been processed and delivered.
+     * Sets the job end time. Job ends when it has been processed and delivered.
      *
      * @param float $microtime
+     *
      * @return JobInterface
      */
     public function setEnd($microtime);
 
     /**
-     * Set the process duration in seconds with microsecond precision.
+     * Sets the process duration in seconds with microsecond precision.
      *
      * @param float $duration
+     *
      * @return JobInterface
      */
     public function setProcessDuration($duration);
@@ -174,9 +244,10 @@ interface JobInterface extends MessageInterface
     public function getProcessDuration();
 
     /**
-     * Set the delivery duration in seconds with microsecond precision.
+     * Sets the delivery duration in seconds with microsecond precision.
      *
      * @param float $duration
+     *
      * @return JobInterface
      */
     public function setDeliveryDuration($duration);

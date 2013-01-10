@@ -34,7 +34,7 @@ abstract class AbstractJob extends AbstractMessage implements JobInterface
     public function __construct()
     {
         $this->beginning = (string) microtime(true);
-        $this->error     = false;
+        $this->error = false;
     }
 
     public function getSource()
@@ -111,6 +111,9 @@ abstract class AbstractJob extends AbstractMessage implements JobInterface
         return $this->delivery;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setDelivery(DeliveryInterface $delivery = null)
     {
         $this->delivery = $delivery;
@@ -129,9 +132,53 @@ abstract class AbstractJob extends AbstractMessage implements JobInterface
     /**
      * {@inheritdoc}
      */
+    public function getParameter($name)
+    {
+        if (!isset($this->parameters[$name])) {
+            throw new InvalidArgumentException(sprintf('Parameter %s does not exist', $name));
+        }
+
+        return $this->parameters[$name];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function setParameters(array $parameters)
     {
         $this->parameters = $parameters;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addParameter($name, $value)
+    {
+        $this->parameters[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hasParameter($name)
+    {
+        return isset($this->parameters[$name]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeParameter($name)
+    {
+        if (!isset($this->parameters[$name])) {
+            throw new InvalidArgumentException(sprintf('Parameter %s does not exist', $name));
+        }
+
+        unset($this->parameters[$name]);
 
         return $this;
     }
@@ -246,7 +293,7 @@ abstract class AbstractJob extends AbstractMessage implements JobInterface
      */
     public function requireReceipt()
     {
-        return false;
+        return 0 < count($this->receipts);
     }
 
     /**
@@ -255,7 +302,7 @@ abstract class AbstractJob extends AbstractMessage implements JobInterface
     public function setReceipts(array $receipts)
     {
         array_map(function ($receipt) {
-            if (! $receipt instanceof ReceiptInterface) {
+            if (!$receipt instanceof ReceiptInterface) {
                 throw new InvalidArgumentException('setReceipts only accept ReceiptInterface');
             }
         }, $receipts);
@@ -288,8 +335,8 @@ abstract class AbstractJob extends AbstractMessage implements JobInterface
         $job = new static();
 
         return $job->setSource($source)
-            ->setDelivery($delivery)
-            ->setParameters($parameters);
+                ->setDelivery($delivery)
+                ->setParameters($parameters);
     }
 
     /**

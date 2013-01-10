@@ -160,7 +160,18 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
      */
     public function testRequireReceipt()
     {
-        $this->assertInternalType('boolean', $this->object->requireReceipt());
+        $this->assertFalse($this->object->requireReceipt());
+    }
+
+    /**
+     * @covers Gloubster\Message\Job\AbstractJob::requireReceipt
+     */
+    public function testRequireReceiptMustReturnTrueWhenThereAreReceipts()
+    {
+        $receipt = $this->getMockBuilder('Gloubster\Receipt\ReceiptInterface')->getMock();
+        $this->object->addReceipt($receipt);
+
+        $this->assertTrue($this->object->requireReceipt());
     }
 
     /**
@@ -215,13 +226,49 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers Gloubster\Message\Job\AbstractJob::getParameters
-     * @covers Gloubster\Message\Job\AbstractJob::setParameters
+     * @covers Gloubster\Message\Job\AbstractJob::addParameter
      */
     public function testGetParameters()
     {
         $this->assertInternalType('array', $this->object->getParameters());
         $this->object->setParameters(array('bidou'=>'boudou'));
         $this->assertEquals(array('bidou'=>'boudou'), $this->object->getParameters());
+    }
+
+    /**
+     * @covers Gloubster\Message\Job\AbstractJob::getParameter
+     * @covers Gloubster\Message\Job\AbstractJob::addParameter
+     * @covers Gloubster\Message\Job\AbstractJob::hasParameter
+     * @covers Gloubster\Message\Job\AbstractJob::removeParameter
+     */
+    public function testGetParameter()
+    {
+        $this->assertFalse($this->object->hasParameter('bidou'));
+        $this->object->addParameter('bidou', 'boudou');
+        $this->assertTrue($this->object->hasParameter('bidou'));
+        $this->assertEquals('boudou', $this->object->getParameter('bidou'));
+        $this->object->addParameter('bidou', 'doudou');
+        $this->assertEquals('doudou', $this->object->getParameter('bidou'));
+        $this->object->removeParameter('bidou');
+        $this->assertFalse($this->object->hasParameter('bidou'));
+    }
+
+    /**
+     * @covers Gloubster\Message\Job\AbstractJob::getParameter
+     * @expectedException Gloubster\Exception\InvalidArgumentException
+     */
+    public function testGetParameterMustThrowAnxceptionOnInvalidParameter()
+    {
+        $this->object->getParameter('bidou');
+    }
+
+    /**
+     * @covers Gloubster\Message\Job\AbstractJob::removeParameter
+     * @expectedException Gloubster\Exception\InvalidArgumentException
+     */
+    public function testRemoveParameterMustThrowAnxceptionOnInvalidParameter()
+    {
+        $this->object->removeParameter('bidou');
     }
 
     /**
