@@ -11,8 +11,7 @@
 
 namespace Gloubster\Message\Job;
 
-use Gloubster\Configuration as RabbitMQConfiguration;
-use Gloubster\Exception\RuntimeException;
+use Gloubster\Configuration;
 
 class ImageJob extends AbstractJob
 {
@@ -41,7 +40,7 @@ class ImageJob extends AbstractJob
      */
     public function getRoutingKey()
     {
-        return RabbitMQConfiguration::ROUTINGKEY_IMAGE_PROCESSING;
+        return Configuration::ROUTINGKEY_IMAGE_PROCESSING;
     }
 
     /**
@@ -49,6 +48,6 @@ class ImageJob extends AbstractJob
      */
     public function getExchangeName()
     {
-        return RabbitMQConfiguration::EXCHANGE_DISPATCHER;
+        return Configuration::EXCHANGE_DISPATCHER;
     }
 }

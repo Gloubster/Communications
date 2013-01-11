@@ -11,7 +11,7 @@
 
 namespace Gloubster\Message\Job;
 
-use Gloubster\Configuration as RabbitMQConfiguration;
+use Gloubster\Configuration;
 
 class VideoJob extends ImageJob
 {
@@ -29,11 +29,11 @@ class VideoJob extends ImageJob
 
     public function getRoutingKey()
     {
-        return RabbitMQConfiguration::ROUTINGKEY_VIDEO_PROCESSING;
+        return Configuration::ROUTINGKEY_VIDEO_PROCESSING;
     }
 
     public function getExchangeName()
     {
-        return RabbitMQConfiguration::EXCHANGE_DISPATCHER;
+        return Configuration::EXCHANGE_DISPATCHER;
     }
 }
