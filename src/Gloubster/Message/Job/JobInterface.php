@@ -260,6 +260,23 @@ interface JobInterface extends MessageInterface
     public function getDeliveryDuration();
 
     /**
+     * Gets an array of key/value informations about results, null if not yet
+     * processed.
+     *
+     * @return array|null
+     */
+    public function getResult();
+
+    /**
+     * Set an array of key/value informations about results
+     *
+     * @param array|null $result
+     *
+     * @return JobInterface
+     */
+    public function setResult(array $result = null);
+
+    /**
      * Returns the RabbitMQ routing key name that has been used.
      *
      * @return string
