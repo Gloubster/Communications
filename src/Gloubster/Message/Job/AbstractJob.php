@@ -26,6 +26,7 @@ abstract class AbstractJob extends AbstractMessage implements JobInterface
     private $processDuration;
     private $deliveryDuration;
     private $workerId;
+    private $result;
     private $receipts = array();
     private $source;
     protected $parameters = array();
@@ -209,6 +210,9 @@ abstract class AbstractJob extends AbstractMessage implements JobInterface
         return null === $this->beginning ? $this->beginning : (float) $this->beginning;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function setBeginning($beginning)
     {
         $this->beginning = null !== $beginning ? (string) $beginning : null;
@@ -294,6 +298,18 @@ abstract class AbstractJob extends AbstractMessage implements JobInterface
     public function requireReceipt()
     {
         return 0 < count($this->receipts);
+    }
+
+    public function getResult()
+    {
+        return $this->result;
+    }
+
+    public function setResult(array $result = null)
+    {
+        $this->result = $result;
+
+        return $this;
     }
 
     /**

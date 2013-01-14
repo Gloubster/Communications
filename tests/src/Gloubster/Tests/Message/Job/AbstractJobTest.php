@@ -333,9 +333,27 @@ abstract class AbstractJobTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('string', $this->object->getExchangeName());
     }
 
+    /**
+     * @covers Gloubster\Message\Job\AbstractJob::toJson
+     */
     public function testValidJson()
     {
         $this->assertInternalType('array', json_decode($this->object->toJson(), true));
+    }
+
+    /**
+     * @covers Gloubster\Message\Job\AbstractJob::setResult
+     * @covers Gloubster\Message\Job\AbstractJob::getResult
+     */
+    public function testGetSetResult()
+    {
+        $result = array('sha245' => '65647576890abc');
+        $this->object->setResult($result);
+        $this->assertEquals($result, $this->object->getResult());
+
+        $data = json_decode($this->object->toJson(), true);
+
+        $this->assertEquals($result, $data['result']);
     }
 }
 
